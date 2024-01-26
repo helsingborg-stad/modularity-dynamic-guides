@@ -26,6 +26,27 @@ class DynamicGuides extends \Modularity\Module
         }, 10, 2);
     }
 
+    
+    /**
+     * View data
+     * @return array
+    */
+    public function data(): array
+    {
+        $data = [];
+        $fields = get_fields($this->ID);
+        $data['heading'] = $fields['dynamic_guide_heading'];
+        $data['preamble'] = $fields['dynamic_guide_preamble'];
+        $data['startButtonLabel'] = $fields['dynamic_guide_button_start_label'];
+        $data['image'] = $this->getImageFromId($fields['dynamic_guide_background_image']);
+        
+        return $data;
+    }
+
+    private function getImageFromId($id) {
+        return wp_get_attachment_image_src($id, [1920, 1080]);
+    }
+
     public function template(): string
     {
         return "dynamic-guide.blade.php";

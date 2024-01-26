@@ -43,7 +43,7 @@ add_action('acf/init', function () {
     $acfExportManager->setTextdomain('modularity-dynamic-guides');
     $acfExportManager->setExportFolder(MODULARITYDYNAMICGUIDES_PATH . 'source/php/AcfFields/');
     $acfExportManager->autoExport(array(
-        'modularity-dynamic-guides-settings' => 'group_61ea7a87e8aaa' //Update with acf id here, settings view
+        'modularity-dynamic-guides-settings' => 'group_65b3a530b28a9' //Update with acf id here, settings view
     ));
     $acfExportManager->import();
 });

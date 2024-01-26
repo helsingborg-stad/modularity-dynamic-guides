@@ -1,1 +1,3 @@
-console.log('Modularity Dynamic Guides'); 
+import StartGuide from './frontend/startGuide';
+
+new StartGuide();
