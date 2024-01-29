@@ -46,6 +46,8 @@ Thumbs.db
 # ignore dist temp folder
 dist/temp
 dist/.temp
+dist/css
+dist
 
 # -------------------------
 # BEGIN Whitelisted Files
