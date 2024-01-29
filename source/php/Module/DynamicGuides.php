@@ -35,16 +35,41 @@ class DynamicGuides extends \Modularity\Module
     {
         $data = [];
         $fields = get_fields($this->ID);
-        $data['heading'] = $fields['dynamic_guide_heading'];
-        $data['preamble'] = $fields['dynamic_guide_preamble'];
-        $data['startButtonLabel'] = $fields['dynamic_guide_button_start_label'];
-        $data['image'] = $this->getImageFromId($fields['dynamic_guide_background_image']);
+        $data['startPage'] = $this->getStartPageValues($fields);
         
         return $data;
     }
 
+    private function getStartPageValues(array $fields) {
+        $startPage = !empty($fields['dynamic_guide_start_page']) ? 
+        array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page']) : 
+        [];
+
+        $startPage['background_image'] = $this->getImageFromId($startPage['background_image']);
+
+        if (!class_exists('\Municipio\Helper\FormatObject')) {
+           return false; 
+        }
+
+        return $startPage;
+    }
+
+    private function defaultStartPageValues() {
+        return [
+            'heading' => '',
+            'preamble' => '',
+            'button_label' => '',
+            'background_image' => false
+
+        ];
+    }
+
     private function getImageFromId($id) {
-        return wp_get_attachment_image_src($id, [1920, 1080]);
+        if ($id && class_exists('\Municipio\Helper\Image')) {
+            return \Municipio\Helper\Image::getImageAttachmentData($id, [1920, 1080]);
+        }
+
+        return false;
     }
 
     public function template(): string
