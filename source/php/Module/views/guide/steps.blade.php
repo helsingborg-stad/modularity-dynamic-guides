@@ -23,16 +23,16 @@
             @endforeach
         @endif
     
-    @button([
-        'style'             => 'basic',
-        'color'             => 'default',
-        'text'              => 'Previous step',
-        'icon'              => 'arrow_back',
-        'reversePositions'  => 'true',
-        'classList'         => ['u-margin__right--auto', 'u-margin__top--3'],
-        'attributeList'     => ['data-js-dynamic-guide-back-button' => '']
-    ])
-    test
-    @endbutton
     </div>
 @endforeach
+@button([
+    'style'             => 'basic',
+    'color'             => 'default',
+    'text'              => 'Previous step',
+    'icon'              => 'arrow_back',
+    'reversePositions'  => 'true',
+    'classList'         => ['u-display--none', 'u-margin__right--auto', 'u-margin__top--3'],
+    'attributeList'     => ['data-js-dynamic-guide-back-button' => '']
+])
+test
+@endbutton
