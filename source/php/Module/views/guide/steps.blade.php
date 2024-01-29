@@ -1,9 +1,9 @@
-<div class="dynamic-guide__guide u-padding__top--12" data-js-dynamic-guide-steps>
+<div class="dynamic-guide__guide u-padding__top--12 u-display--none" data-js-dynamic-guide-steps>
     @paper([
     'classList' => ['u-padding--6', 'dynamic-guide__guide-container']
     ])
         @foreach($steps as $index => $step)
-            <div class="dynamic-guide__content dynamic-guide__step" data-js-dynamic-guide-step="{{ $index }}">
+            <div class="dynamic-guide__content dynamic-guide__step u-display--none" data-js-dynamic-guide-step="{{ $index }}">
             @if(!empty($step['heading']))
             @typography([
                 'element'   => 'h2',
