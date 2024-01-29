@@ -19,7 +19,8 @@
                                 @button([
                                     'text'      => $choiceData['choice'],
                                     'color'     => 'primary',
-                                    'classList' => ['dynamic-guide__step-choice', 'u-margin__left--0', 'u-margin__y--1']
+                                    'classList' => ['dynamic-guide__step-choice', 'u-margin__left--0', 'u-margin__y--1'],
+                                    'attributeList' => ['data-js-dynamic-guide-choice' => $choiceData['choice']]
                                 ])
                                 @endbutton
                         @endif
@@ -32,7 +33,8 @@
                 'text'              => 'Previous step',
                 'icon'              => 'arrow_back',
                 'reversePositions'  => 'true',
-                'classList'         => ['u-margin__right--auto', 'u-margin__top--3']
+                'classList'         => ['u-margin__right--auto', 'u-margin__top--3'],
+                'attributeList'     => ['data-js-dynamic-guide-back-button' => '']
             ])
             test
             @endbutton
