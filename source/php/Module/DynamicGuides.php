@@ -51,7 +51,7 @@ class DynamicGuides extends \Modularity\Module
            return false; 
         }
 
-        return $startPage;
+        return (array) \Municipio\Helper\FormatObject::camelCase($startPage);
     }
 
     private function defaultStartPageValues() {
