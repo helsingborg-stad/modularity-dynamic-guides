@@ -16,6 +16,28 @@
     }
     
     .dynamic-guide__guide {
-       
+       display: flex;
+       justify-content: center;
+
+        .dynamic-guide__guide-container {
+            display: flex;
+            justify-content: center;
+            width: 600px;
+            max-width: 100%;
+        }
+
+        .dynamic-guide__content {
+            text-align: center;
+        }
+
+        .dynamic-guide__step {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .dynamic-guide__step-choice {
+            font-size: 1.2rem;
+        }
     }
 }

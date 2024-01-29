@@ -36,22 +36,23 @@ class DynamicGuides extends \Modularity\Module
         $data = [];
         $fields = get_fields($this->ID);
         $data['startPage'] = $this->getStartPageValues($fields);
+        $data['steps'] = $this->getChoicesSteps($fields);
+        $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? 
+        $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
         
         return $data;
     }
 
-    private function getStartPageValues(array $fields) {
+    private function getStartPageValues(array $fields): array {
         $startPage = !empty($fields['dynamic_guide_start_page']) ? 
         array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page']) : 
         [];
 
-        $startPage['background_image'] = $this->getImageFromId($startPage['background_image']);
+        return $startPage;
+    }
 
-        if (!class_exists('\Municipio\Helper\FormatObject')) {
-           return false; 
-        }
-
-        return (array) \Municipio\Helper\FormatObject::camelCase($startPage);
+    private function getChoicesSteps(array $fields) {
+        return !empty($fields['dynamic_guide_steps']) ? $fields['dynamic_guide_steps'] : false;
     }
 
     private function defaultStartPageValues() {
@@ -59,8 +60,6 @@ class DynamicGuides extends \Modularity\Module
             'heading' => '',
             'preamble' => '',
             'button_label' => '',
-            'background_image' => false
-
         ];
     }
 

@@ -1,24 +1,20 @@
 <div class="dynamic-guide__guide u-padding__top--12">
     @paper([
-    'classList' => ['u-padding--6', 'u-display--flex', 'u-justify-content--center']
+    'classList' => ['u-padding--6', 'dynamic-guide__guide-container']
     ])
-        @group([
-            'display' => 'inline-flex',
-            'direction' => 'vertical',
-            'justifyContent' => 'center'
-        ])
+        <div class="dynamic-guide__content">
             @if($startPage['heading'])
                 @typography([
                     'element' => 'h2',
                     'variant' => 'h1',
-                    'classList' => ['u-text-align--center']
+                    'classList' => ['u-margin__bottom--4']
                 ])
                 {{ $startPage['heading'] }}
                 @endtypography
             @endif
             @if($startPage['preamble'])
                 @typography([
-                    'classList' => ['u-text-align--center', 'u-margin__y--2'],
+                    'classList' => ['u-margin__y--2'],
                     'attributeList' => ['style' => 'max-width: unset;']
                 ]) 
                 {{ $startPage['preamble'] }}
@@ -29,7 +25,8 @@
                 'color' => 'primary',
                 'attributeList' => ['dynamic-guide-start' => '']
             ])
+                {{ $startPage['button_label'] }}
             @endbutton
-        @endgroup
+        </div>
     @endpaper
 </div>

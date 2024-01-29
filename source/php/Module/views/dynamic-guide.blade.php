@@ -1,4 +1,5 @@
 <div class="dynamic-guide">
-    @includeWhen($startPage['backgroundImage'], 'background-image')
-    @includeWhen($startPage, 'start-page')
+    @includeWhen($backgroundImage, 'partials.background-image')
+    @includeWhen($startPage, 'partials.start-page')
+    @includeWhen(!empty($steps), 'guide.steps')
 </div>
