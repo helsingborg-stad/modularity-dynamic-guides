@@ -7,17 +7,40 @@ class App
     public function __construct()
     {
         add_action('plugins_loaded', array($this, 'registerModule'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueueStyles'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueueScripts'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueueAdmin'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueueFrontend'));
+        // add_action('acf/save_post', array($this, 'setHiddenValue'));
 
         $this->cacheBust = new \ModularityDynamicGuides\Helper\CacheBust();
     }
 
+    public function setHiddenValue($postId) {
+        print_r($postId);
+        print_r(get_fields($postId));
+        die;
+    }
+
     /**
-     * Enqueue required style
+     * Enqueue admin css and js
+     * @return void
+    */
+    public function enqueueAdmin() 
+    {
+        wp_register_script(
+            'modularity-dynamic-guides-admin-js',
+            MODULARITYDYNAMICGUIDES_URL . '/dist/' .
+            $this->cacheBust->name('js/modularity-dynamic-guides-admin.js'),
+            ['acf-input']
+        );
+
+        wp_enqueue_script('modularity-dynamic-guides-admin-js');
+    }
+
+    /**
+     * Enqueue frontend css and js
      * @return void
      */
-    public function enqueueStyles()
+    public function enqueueFrontend()
     {
         wp_register_style(
             'modularity-dynamic-guides-css',
@@ -26,14 +49,7 @@ class App
         );
 
         wp_enqueue_style('modularity-dynamic-guides-css');
-    }
 
-    /**
-     * Enqueue required scripts
-     * @return void
-     */
-    public function enqueueScripts()
-    {
         wp_register_script(
             'modularity-dynamic-guides-js',
             MODULARITYDYNAMICGUIDES_URL . '/dist/' .
