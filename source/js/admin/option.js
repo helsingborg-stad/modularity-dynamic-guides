@@ -22,22 +22,27 @@ class Option {
         });
         
         choices.forEach(choice => {
-            let currentChoiceValue = choice.el.value;
-            const choiceIndex = this.choiceIndex;
-            this.saveValueGlobally('choice-' +  choiceIndex, currentChoiceValue);
-            this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex));
-
-            choice.el.addEventListener('focus', (e) => {
-                currentChoiceValue = choice.el.value;
-            });
-
-            choice.el.addEventListener('change', (e) => {
-                this.saveValueGlobally('choice-' +  choiceIndex, choice.el.value);
-                this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex));   
-            });
-
-            this.choiceIndex ++;
+           this.listenToChoice(choice);
         });
+    }
+
+    listenToChoice(choice) {
+        console.log(choice);
+        let currentChoiceValue = choice.el.value;
+        const choiceIndex = this.choiceIndex;
+        this.saveValueGlobally('choice-' +  choiceIndex, currentChoiceValue);
+        this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex));
+
+        choice.el.addEventListener('focus', (e) => {
+            currentChoiceValue = choice.el.value;
+        });
+
+        choice.el.addEventListener('change', (e) => {
+            this.saveValueGlobally('choice-' +  choiceIndex, choice.el.value);
+            this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex));   
+        });
+
+        this.choiceIndex ++;
     }
 
     saveValueGlobally(key, value) {

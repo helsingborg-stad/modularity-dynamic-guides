@@ -244,7 +244,7 @@
                     },
                     "choices": [],
                     "default_value": [],
-                    "return_format": "value",
+                    "return_format": "array",
                     "multiple": 1,
                     "allow_null": 0,
                     "ui": 0,
@@ -253,25 +253,24 @@
                     "allow_custom": 0,
                     "search_placeholder": "",
                     "parent_repeater": "field_65b8b17f91cdf"
-                },
-                {
-                    "key": "field_65b8f7afec826",
-                    "label": "Outcome hidden",
-                    "name": "outcome_hidden",
-                    "aria-label": "",
-                    "type": "acfe_hidden",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "parent_repeater": "field_65b8b17f91cdf"
                 }
             ]
+        },
+        {
+            "key": "field_65ba49cbdb950",
+            "label": "dynamic_guide_outcomes_hidden",
+            "name": "dynamic_guide_outcomes_hidden",
+            "aria-label": "",
+            "type": "acfe_hidden",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": ""
         }
     ],
     "location": [

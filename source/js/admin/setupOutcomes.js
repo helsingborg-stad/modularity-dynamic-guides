@@ -4,19 +4,57 @@ class SetupOutcomes {
     constructor(group) {
         this.group = group;
         this.selects = this.getSelects();
+        this.hiddenField = acf.getField('field_65ba49cbdb950');
+        this.hiddenFieldValue = this.hiddenField.val() ? JSON.parse(this.hiddenField.val()) : false;
+
+        if (!this.hiddenField) return;
+
         this.addActions();
 
         if (this.selects) {
             this.setupAlreadyCreatedSelects();
+
+            this.selects.forEach(select => {
+                this.setSelectListener(select);
+            });
         }
+    }
+
+    setSelectListener(select) {
+        select.addEventListener('change', (e) => {
+            this.setHiddenValue();
+        })
+    }
+
+    setHiddenValue() {
+        const selectObjects = {};
+
+        this.getSelects().forEach((select, index) => {
+            const selected = select.selectedOptions;
+            let selectObject = {};
+
+            for (const option of selected) {
+                const optiongroupLabel = option.parentElement?.label;
+
+                if (optiongroupLabel) {
+                    selectObject[optiongroupLabel] = option.value;
+                }
+            }
+
+            selectObjects[index] = selectObject;
+        });
+
+        this.hiddenField.val(JSON.stringify(selectObjects));
     }
 
     addActions() {
         acf.addAction('append', (el) => {
             const outcomeSelect = el[0]?.querySelector('[data-name="outcome"] select');
+
             if (outcomeSelect) {
-                this.selects.push({'select': outcomeSelect});
+                this.selects.push(outcomeSelect);
                 this.setupNewSelect(outcomeSelect);
+                this.setSelectListener(outcomeSelect);
             }
         });
 
@@ -26,6 +64,9 @@ class SetupOutcomes {
                 const index = this.selects.indexOf(select);
                 if (index !== -1) {
                     this.selects.splice(index, 1);
+                    setTimeout(() => {
+                        this.setHiddenValue();
+                    }, 1000);
                 }
             }
         });
@@ -34,16 +75,16 @@ class SetupOutcomes {
     getSelects() {
         const field = this.group.querySelector('[data-name="dynamic_guide_outcomes"]');
 
-        const selects = [...field.querySelectorAll('.acf-row:not(.acf-clone)')].map(selectRow => {
+        const selectsArr = [...field.querySelectorAll('.acf-row:not(.acf-clone)')].map(selectRow => {
             const select = selectRow.querySelector('[data-name="outcome"] select');
-            const hidden = selectRow.querySelector('[data-name="outcome_hidden"] input');
-            return select && hidden ? {'select': select, 'hidden': hidden} : false;
+            return select ? select : false;
         });
-        
-        return selects ? selects : [];
+
+        return selectsArr ? selectsArr : [];
     }
 
     setupNewSelect(outcomeSelect) {
+        console.log(globalState);
         for (const step in globalState) {
             for (const key in globalState[step]) {
                 if (key === 'heading') {
@@ -58,8 +99,17 @@ class SetupOutcomes {
     
     setupAlreadyCreatedSelects() {
         this.group.addEventListener('customEvent', (e) => {
-            this.selects.forEach(select => {
+            this.selects.forEach((select, index) => {
                 this.createOptions(select, e.detail);
+                if (this.hiddenFieldValue[index]) {
+                    for (const key in this.hiddenFieldValue[index]) {
+                        const preSelect = select.querySelector(`optgroup[label="${key}"] option[value="${this.hiddenFieldValue[index][key]}"]`);
+
+                        if (preSelect) {
+                            preSelect.selected = true;
+                        }
+                    }
+                }
             });
         });
     }

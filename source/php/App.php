@@ -9,7 +9,6 @@ class App
         add_action('plugins_loaded', array($this, 'registerModule'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdmin'));
         add_action('wp_enqueue_scripts', array($this, 'enqueueFrontend'));
-        // add_action('acf/save_post', array($this, 'setHiddenValue'));
 
         $this->cacheBust = new \ModularityDynamicGuides\Helper\CacheBust();
     }
@@ -34,6 +33,15 @@ class App
         );
 
         wp_enqueue_script('modularity-dynamic-guides-admin-js');
+
+        wp_register_style(
+            'modularity-dynamic-guides-admin-css',
+            MODULARITYDYNAMICGUIDES_URL . '/dist/' .
+            $this->cacheBust->name('css/modularity-dynamic-guides-admin.css')
+        );
+
+        wp_enqueue_style('modularity-dynamic-guides-admin-css');
+
     }
 
     /**

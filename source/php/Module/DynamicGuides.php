@@ -35,11 +35,11 @@ class DynamicGuides extends \Modularity\Module
     {
         $data = [];
         $fields = get_fields($this->ID);
+        echo '<pre>' . print_r( $fields, true ) . '</pre>';die;
         $data['startPage'] = $this->getStartPageValues($fields);
         $data['steps'] = $this->getChoicesSteps($fields);
         $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? 
         $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
-        
         return $data;
     }
 
