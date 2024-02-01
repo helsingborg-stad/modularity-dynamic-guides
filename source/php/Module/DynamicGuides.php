@@ -39,7 +39,6 @@ class DynamicGuides extends \Modularity\Module
         $data['steps'] = $this->getChoicesSteps($fields);
         $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? 
         $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
-        
         return $data;
     }
 

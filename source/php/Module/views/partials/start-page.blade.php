@@ -1,4 +1,4 @@
-<div class="dynamic-guide__content">
+<div class="dynamic-guide__content" data-js-dynamic-guide-step="0">
     @if($startPage['heading'])
         @typography([
             'element' => 'h2',
@@ -17,10 +17,9 @@
         @endtypography
     @endif
     @button([
-        'text' => "label",
+        'text' => $startPage['button_label'],
         'color' => 'primary',
         'attributeList' => ['dynamic-guide-start' => '']
     ])
-        {{ $startPage['button_label'] }}
     @endbutton
 </div>
