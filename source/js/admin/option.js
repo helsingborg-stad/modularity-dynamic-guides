@@ -27,7 +27,6 @@ class Option {
     }
 
     listenToChoice(choice) {
-        console.log(choice);
         let currentChoiceValue = choice.el.value;
         const choiceIndex = this.choiceIndex;
         this.saveValueGlobally('choice-' +  choiceIndex, currentChoiceValue);

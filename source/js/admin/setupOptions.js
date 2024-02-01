@@ -14,17 +14,44 @@ class setupOptions {
     addActions() {
         acf.addAction('append', (el) => {
             const row = el[0];
-            const element = row?.querySelector('input');
-            const choicesElement = row?.closest('[dynamic-guide-options-instance]');
-
-            if (choicesElement) {
-                const instance = choicesElement.getAttribute('dynamic-guide-options-instance');
-                
-                if (this.optionsInstance.hasOwnProperty(instance)) {
-                    this.optionsInstance[instance].listenToChoice({'el': element, 'val': ''});
+            const choice = el?.find('[data-name="choice"] input');
+            const stepRow = el?.find('[data-name="choices"]');
+            if (stepRow[0]) {
+                const heading = el.find('[data-name="heading"] input');
+                if (heading[0]) {
+                    this.stepRowAdded(stepRow[0], heading[0]);
                 }
+            } else if (choice[0]) {
+                const choicesElement = row?.closest('[dynamic-guide-options-instance]');
+
+                this.choiceRowAdded(choicesElement, choice);
             }
         });
+    }
+
+    stepRowAdded(stepRow, heading) {
+        const key = this.generateUniqueKey();
+        stepRow.setAttribute('dynamic-guide-options-instance', key);
+
+        if (!globalState[key]) {
+            globalState[key] = {};
+        }
+
+        
+        const optionsInstance = new Option(key, this.group);
+        if (!this.optionsInstance[key]) {
+            this.optionsInstance[key] = optionsInstance;
+        }
+        optionsInstance.setupListeners({'el': heading, 'val': heading.value}, []);
+    }
+
+    choiceRowAdded(choicesElement, element) {
+        const instance = choicesElement?.getAttribute('dynamic-guide-options-instance');
+
+        if (element[0] && this.optionsInstance.hasOwnProperty(instance)) {
+            console.log();
+            this.optionsInstance[instance].listenToChoice({'el': element[0], 'val': ''});
+        }
     }
 
     generateUniqueKey() {
@@ -39,11 +66,12 @@ class setupOptions {
         if (!choicesSets) return;
         
         choicesSets.forEach(set => {
+            console.log(set);
             const choicesRow = set.parentElement;
             const heading = choicesRow?.querySelector('[data-name="heading"] input');
             const key = this.generateUniqueKey();
             set.setAttribute('dynamic-guide-options-instance', key);
-
+            console.log(set);
             if (!heading) return;
             const choicesArr = [...set.querySelectorAll('.acf-row:not(.acf-clone)')].map(choiceRow => {
                 const choice = choiceRow.querySelector('[data-name="choice"] input');

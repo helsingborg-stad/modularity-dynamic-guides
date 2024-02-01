@@ -59,14 +59,14 @@ class SetupOutcomes {
         });
 
         acf.addAction('remove', (el) => {
-            const select = el[0].querySelector('select');
+            const select = el[0]?.querySelector('select');
             if (select) {
                 const index = this.selects.indexOf(select);
                 if (index !== -1) {
                     this.selects.splice(index, 1);
                     setTimeout(() => {
                         this.setHiddenValue();
-                    }, 1000);
+                    }, 500);
                 }
             }
         });
