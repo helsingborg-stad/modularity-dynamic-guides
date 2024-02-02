@@ -253,6 +253,39 @@
                     "allow_custom": 0,
                     "search_placeholder": "",
                     "parent_repeater": "field_65b8b17f91cdf"
+                },
+                {
+                    "key": "field_65bcf9c7288ef",
+                    "label": "Posts",
+                    "name": "outcome_posts",
+                    "aria-label": "",
+                    "type": "post_object",
+                    "instructions": "Posts to show for following outcome",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": "",
+                    "post_status": [
+                        "publish"
+                    ],
+                    "taxonomy": "",
+                    "return_format": "id",
+                    "multiple": 1,
+                    "save_custom": 0,
+                    "save_post_status": "publish",
+                    "acfe_bidirectional": {
+                        "acfe_bidirectional_enabled": "0"
+                    },
+                    "allow_null": 0,
+                    "bidirectional": 0,
+                    "ui": 1,
+                    "bidirectional_target": [],
+                    "save_post_type": "",
+                    "parent_repeater": "field_65b8b17f91cdf"
                 }
             ]
         },

@@ -49,7 +49,7 @@ class SetupOutcomes {
 
         if (globalState[key]['heading']) {
             const optgroup = select.querySelector(`optgroup[dynamic-guide-optgroup="${key}"]`);
-            const option = optgroup?.querySelector(`option[dynamic-guide-option="${choiceKey + '_' + key}"]`)
+            const option = optgroup?.querySelector(`option[dynamic-guide-option="${choiceKey}"]`)
             
             if (type === 'choice') {
                 this.addOption(key, choiceKey, option, optgroup);
