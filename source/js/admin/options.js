@@ -8,7 +8,6 @@ class Options {
     }
 
     setupListeners(heading, choices) {
-        console.log(heading);
         const input = heading.$el.find('input');
         if (!input) return;
 

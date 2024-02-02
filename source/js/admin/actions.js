@@ -146,7 +146,6 @@ class Actions {
 
     setupNewSelect(outcomeSelect) {
         if (outcomeSelect[0] && outcomeSelect[0].$el) {
-            console.log(outcomeSelect[0].$el.find('select'));
             return;
         }
         for (const step in globalState) {

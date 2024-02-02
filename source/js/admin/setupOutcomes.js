@@ -5,7 +5,6 @@ class SetupOutcomes {
         this.group = group;
         this.selects = this.getSelects();
         this.hiddenField = acf.getField('field_65ba49cbdb950');
-        console.log(this.hiddenField.val());
         this.hiddenFieldValue = this.hiddenField.val() ? JSON.parse(this.hiddenField.val()) : false;
 
         if (!this.hiddenField) return;
