@@ -1,19 +1,20 @@
 import Option from './option';
+import Options from './options';
 import globalState from './globalState';
 
 class setupOptions {
     constructor(group) {
         this.group = group;
         this.optionsInstance = {};
+
         this.setupOptions();
         this.addActions();
-
-  
     }
     
     addActions() {
         acf.addAction('append', (el) => {
             const row = el[0];
+            
             const choice = el?.find('[data-name="choice"] input');
             const stepRow = el?.find('[data-name="choices"]');
             if (stepRow[0]) {
@@ -23,7 +24,7 @@ class setupOptions {
                 }
             } else if (choice[0]) {
                 const choicesElement = row?.closest('[dynamic-guide-options-instance]');
-
+                console.log(choice);
                 this.choiceRowAdded(choicesElement, choice);
             }
         });
@@ -64,31 +65,48 @@ class setupOptions {
     setupOptions() {
         const choicesSets = this.group.querySelectorAll('.acf-row:not(.acf-clone) [data-name="choices"]');
         if (!choicesSets) return;
-        
-        choicesSets.forEach(set => {
-            console.log(set);
-            const choicesRow = set.parentElement;
-            const heading = choicesRow?.querySelector('[data-name="heading"] input');
-            const key = this.generateUniqueKey();
-            set.setAttribute('dynamic-guide-options-instance', key);
-            console.log(set);
-            if (!heading) return;
-            const choicesArr = [...set.querySelectorAll('.acf-row:not(.acf-clone)')].map(choiceRow => {
-                const choice = choiceRow.querySelector('[data-name="choice"] input');
-                return choice && choice.value ? {'el': choice, 'val': choice.value} : false;
+
+        const steps = acf.getField('field_65b78add784cd');
+
+        // const repeater = steps.$el.find('.acf-row:not(.acf-clone');
+
+        // console.log(repeater);
+
+        const headingsFields = acf.getFields({
+            key: 'field_65b7993d1aba6',
+            parent: steps.$el
+        });
+
+        let choicesArray = [];
+        headingsFields.forEach(heading => {
+            const choicesRepeater = acf.getFields({
+                key: 'field_65b78b84784ce',
+                sibling: heading.$el,
+                limit: 1
             });
             
-            
-            if (!globalState[key]) {
-                globalState[key] = {};
+            if (choicesRepeater && choicesRepeater[0] && choicesRepeater[0].$el) {
+                const key = this.generateUniqueKey();
+                choicesRepeater[0].$el.attr('dynamic-guide-options-instance', key)
+                const choices = acf.getFields({
+                    key: 'field_65b78b92784cf',
+                    parent: choicesRepeater[0].$el
+                });
+                
+                if (choices) {
+                    if (!globalState[key]) {
+                        globalState[key] = {};
+                    }
+
+                    const optionsInstance = new Options(key, this.group);
+                    if (!this.optionsInstance[key]) {
+                        this.optionsInstance[key] = optionsInstance;
+                    }
+                    
+                    optionsInstance.setupListeners(heading, choices);
+                }
             }
 
-            
-            const optionsInstance = new Option(key, this.group);
-            if (!this.optionsInstance[key]) {
-                this.optionsInstance[key] = optionsInstance;
-            }
-            optionsInstance.setupListeners({'el': heading, 'val': heading.value}, choicesArr);
         });
     }
 }
