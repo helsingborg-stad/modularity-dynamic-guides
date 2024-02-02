@@ -8,6 +8,7 @@ class Options {
     }
 
     setupListeners(heading, choices) {
+        console.log(heading);
         const input = heading.$el.find('input');
         if (!input) return;
 
@@ -30,29 +31,27 @@ class Options {
     }
 
     listenToChoice(choice) {
-        console.log(choice);
         const input = choice.$el.find('input');
         if (!input) return;
 
         let currentChoiceValue = input.val();
         const choiceIndex = this.choiceIndex;
-        this.saveValueGlobally('choice-' +  choiceIndex, currentChoiceValue);
-        this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex));
+        this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, currentChoiceValue);
+        this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_'+ this.key));
 
         input.focus((e) => {
             currentChoiceValue = input.val();
         });
 
         input.change((e) => {
-            this.saveValueGlobally('choice-' +  choiceIndex, input.val());
-            this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex));   
+            this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, input.val());
+            this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_'+ this.key));   
         });
 
         this.choiceIndex ++;
     }
 
     saveValueGlobally(key, value) {
-        console.log(globalState);
         globalState[this.key][key] = value;
     }
 

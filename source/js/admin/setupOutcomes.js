@@ -5,96 +5,27 @@ class SetupOutcomes {
         this.group = group;
         this.selects = this.getSelects();
         this.hiddenField = acf.getField('field_65ba49cbdb950');
+        console.log(this.hiddenField.val());
         this.hiddenFieldValue = this.hiddenField.val() ? JSON.parse(this.hiddenField.val()) : false;
 
         if (!this.hiddenField) return;
 
-        this.addActions();
-
         if (this.selects) {
             this.setupAlreadyCreatedSelects();
-
-            this.selects.forEach(select => {
-                this.setSelectListener(select);
-            });
         }
-    }
-
-    setSelectListener(select) {
-        select.addEventListener('change', (e) => {
-            this.setHiddenValue();
-        })
-    }
-
-    setHiddenValue() {
-        const selectObjects = {};
-
-        this.getSelects().forEach((select, index) => {
-            const selected = select.selectedOptions;
-            let selectObject = {};
-
-            for (const option of selected) {
-                const optiongroupLabel = option.parentElement?.label;
-
-                if (optiongroupLabel) {
-                    selectObject[optiongroupLabel] = option.value;
-                }
-            }
-
-            selectObjects[index] = selectObject;
-        });
-
-        this.hiddenField.val(JSON.stringify(selectObjects));
-    }
-
-    addActions() {
-        acf.addAction('append', (el) => {
-            const outcomeSelect = el[0]?.querySelector('[data-name="outcome"] select');
-
-            if (outcomeSelect) {
-                this.selects.push(outcomeSelect);
-                this.setupNewSelect(outcomeSelect);
-                this.setSelectListener(outcomeSelect);
-            }
-        });
-
-        acf.addAction('remove', (el) => {
-            const select = el[0]?.querySelector('select');
-            if (select) {
-                const index = this.selects.indexOf(select);
-                if (index !== -1) {
-                    this.selects.splice(index, 1);
-                    setTimeout(() => {
-                        this.setHiddenValue();
-                    }, 500);
-                }
-            }
-        });
     }
 
     getSelects() {
-        const field = this.group.querySelector('[data-name="dynamic_guide_outcomes"]');
-
-        const selectsArr = [...field.querySelectorAll('.acf-row:not(.acf-clone)')].map(selectRow => {
-            const select = selectRow.querySelector('[data-name="outcome"] select');
-            return select ? select : false;
+        const outcomeFields = acf.getFields({
+            key: 'field_65b8ee0ac6cd8'
+        });
+        
+        const selects = outcomeFields.map(outcomeField => {
+            const select = outcomeField.$el.find('select') 
+            return select && select[0] ? select[0] : false;
         });
 
-        return selectsArr ? selectsArr : [];
-    }
-
-    setupNewSelect(outcomeSelect) {
-        console.log(globalState);
-        for (const step in globalState) {
-            for (const key in globalState[step]) {
-                if (key === 'heading') {
-                    this.createOptions(outcomeSelect, {'key': step, 'type': 'heading', 'choiceKey': false});
-                } else {
-                    this.createOptions(outcomeSelect, {'key': step, 'type': 'choice', 'choiceKey': key})
-                }
-
-            }
-        }
+        return selects ? selects : [];
     }
     
     setupAlreadyCreatedSelects() {
@@ -119,7 +50,7 @@ class SetupOutcomes {
 
         if (globalState[key]['heading']) {
             const optgroup = select.querySelector(`optgroup[dynamic-guide-optgroup="${key}"]`);
-            const option = optgroup?.querySelector(`option[dynamic-guide-option="${choiceKey}"]`)
+            const option = optgroup?.querySelector(`option[dynamic-guide-option="${choiceKey + '_' + key}"]`)
             
             if (type === 'choice') {
                 this.addOption(key, choiceKey, option, optgroup);
