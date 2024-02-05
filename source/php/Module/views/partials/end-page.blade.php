@@ -1,4 +1,4 @@
-<div class="dynamic-guide__content u-display--none" data-js-dynamic-guide-endpage>
+<div class="dynamic-guide__content u-display--none" data-js-dynamic-guide-step>
 
     @typography([
         'element' => 'h2',
@@ -8,8 +8,8 @@
         Här är dina svar. Klicka för resultat.
     @endtypography
 
-    <div class="dynamic-guide__result" data-dynamic-guide-result></div>
-
+    <div class="dynamic-guide__result" data-js-dynamic-guide-result></div>
+<div>
     @button([
         'text' => "Hämta resultat",
         'color' => 'primary',
@@ -18,16 +18,17 @@
         'attributeList' => ['data-js-dynamic-guide-get-results-button' => '']
     ])
     @endbutton
-
 </div>
 
 @button([
     'style' => 'basic',
     'color' => 'default',
     'text' => 'Inte rätt? Starta om guiden',
-    'icon' => 'arrow_back',
     'reversePositions' => 'true',
-    'classList' => ['u-display--none', 'u-margin__right--auto', 'u-margin__top--3'],
-    'attributeList' => ['data-js-dynamic-guide-endpage-back-button' => '']
+    'classList' => ['dynamic-guide-restart'],
+    'attributeList' => ['data-js-dynamic-guide-restart-button' => '']
 ])
 @endbutton
+</div>
+
+TODO: LÄGG TILL PROGRESSBAR
