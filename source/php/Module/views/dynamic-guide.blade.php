@@ -6,6 +6,7 @@
         ])
             @includeWhen($startPage, 'partials.start-page')
             @includeWhen(!empty($steps), 'guide.steps')
+            @include('partials.end-page')
         @endpaper
     </div>
 </div>

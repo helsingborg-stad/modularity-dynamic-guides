@@ -49,6 +49,9 @@
             'layout' => 'block',
             'acfe_seamless_style' => 0,
             'acfe_group_modal' => 0,
+            'acfe_group_modal_close' => 0,
+            'acfe_group_modal_button' => '',
+            'acfe_group_modal_size' => 'large',
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_65b3a5735e4bd',
@@ -112,9 +115,6 @@
                     'append' => '',
                 ),
             ),
-            'acfe_group_modal_close' => 0,
-            'acfe_group_modal_button' => '',
-            'acfe_group_modal_size' => 'large',
         ),
         2 => array(
             'key' => 'field_65b78add784cd',
@@ -181,6 +181,7 @@
                     'collapsed' => '',
                     'button_label' => __('Add Row', 'modularity-dynamic-guides'),
                     'rows_per_page' => 20,
+                    'parent_repeater' => 'field_65b78add784cd',
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_65b78b92784cf',
@@ -204,7 +205,6 @@
                             'parent_repeater' => 'field_65b78b84784ce',
                         ),
                     ),
-                    'parent_repeater' => 'field_65b78add784cd',
                 ),
             ),
         ),

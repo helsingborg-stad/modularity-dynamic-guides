@@ -1,3 +1,5 @@
 import StartGuide from './frontend/startGuide';
 
-new StartGuide();
+[...document.querySelectorAll('.dynamic-guide')].forEach(dynamicGuide => {
+    new StartGuide(dynamicGuide);
+})

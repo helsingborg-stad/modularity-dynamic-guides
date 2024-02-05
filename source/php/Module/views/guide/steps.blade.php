@@ -4,7 +4,8 @@
     @typography([
         'element'   => 'h2',
         'variant'   => 'h1',
-        'classList' => ['u-margin__bottom--4']
+        'classList' => ['u-margin__bottom--4'],
+        'attributeList'   => ['data-js-dynamic-guide-question' => "question-{$index}"]
     ])
         {{ $step['heading'] }}
     @endtypography
@@ -34,5 +35,4 @@
     'classList'         => ['u-display--none', 'u-margin__right--auto', 'u-margin__top--3'],
     'attributeList'     => ['data-js-dynamic-guide-back-button' => '']
 ])
-test
 @endbutton
