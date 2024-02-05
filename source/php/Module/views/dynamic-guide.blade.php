@@ -1,4 +1,4 @@
-<div class="dynamic-guide">
+{{-- <div class="dynamic-guide">
     @includeWhen($backgroundImage, 'partials.background-image')
     <div class="dynamic-guide__guide u-padding__top--12">
         @paper([
@@ -9,4 +9,6 @@
             @include('partials.end-page')
         @endpaper
     </div>
-</div>
+</div> --}}
+
+@include('results-page')
