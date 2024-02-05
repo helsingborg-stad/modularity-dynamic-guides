@@ -1,4 +1,5 @@
 <div class="dynamic-guide">
+@if(empty($outcome))
     @includeWhen($backgroundImage, 'partials.background-image')
     <div class="dynamic-guide__guide u-padding__top--12">
         @paper([
@@ -19,6 +20,7 @@
             @endbutton
         @endpaper
     </div>
+    @else
+        @include('partials.results-page')
+    @endif
 </div>
-
-@include('partials.results-page')
