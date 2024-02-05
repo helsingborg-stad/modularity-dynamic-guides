@@ -1,4 +1,4 @@
-class Test {
+class Guide {
     constructor(dynamicGuide) {
         this.index = 0;
         this.choices = {}; 
@@ -60,9 +60,16 @@ class Test {
     }
 
     getResults() {
-        const urlParams = new URLSearchParams();
-        console.log(urlParams);
+        const urlParams = new URLSearchParams(Object.entries({
+            outcome: "",
+            ...this.choices,
+        }));
+    
+        const currentUrl = new URL(window.location.href);
+        currentUrl.search = urlParams.toString();
+        window.location.href = currentUrl.toString();
     }
+    
 }
 
-export default Test;
+export default Guide;

@@ -42,7 +42,7 @@ class DynamicGuides extends \Modularity\Module
         
         
         $data['resultPage'] = $this->getResultPageValues($fields);
-        $data['posts'] = $this->getPosts($fields['dynamic_guide_outcomes'][0]['outcome_posts']);
+        // $data['posts'] = $this->getPosts($fields['dynamic_guide_outcomes'][0]['outcome_posts']);
 
         $data['outcome'] = $this->getOutcome($fields);
 
