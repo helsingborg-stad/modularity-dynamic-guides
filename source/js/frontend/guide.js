@@ -39,7 +39,7 @@ class Test {
             this.choices[step.getAttribute('data-js-dynamic-guide-step')] = button.getAttribute('data-js-dynamic-guide-button');
             
             if (Object.keys(this.choices).length === (this.steps.length - 2)) {
-                
+                console.log(this.choices);
             }
         }
     }
@@ -55,8 +55,13 @@ class Test {
             this.steps[index].classList.add('u-display--none');
             this.steps[this.index].classList.remove('u-display--none');
         } else {
-            // this.getResults()
+            this.getResults()
         }
+    }
+
+    getResults() {
+        const urlParams = new URLSearchParams();
+        console.log(urlParams);
     }
 }
 

@@ -20,3 +20,5 @@
         @endpaper
     </div>
 </div>
+
+@include('partials.results-page')

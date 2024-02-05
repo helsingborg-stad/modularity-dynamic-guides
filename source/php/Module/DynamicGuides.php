@@ -35,12 +35,49 @@ class DynamicGuides extends \Modularity\Module
     {
         $data = [];
         $fields = get_fields($this->ID);
-        echo '<pre>' . print_r( $fields, true ) . '</pre>';die;
         $data['startPage'] = $this->getStartPageValues($fields);
         $data['steps'] = $this->getChoicesSteps($fields);
         $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? 
         $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
+        
+        
+        $data['resultPage'] = $this->getResultPageValues($fields);
+        $data['posts'] = $this->getPosts($fields['dynamic_guide_outcomes'][0]['outcome_posts']);
+
+        $data['outcome'] = $this->getOutcome($fields);
+
         return $data;
+    }
+
+    private function getOutcome(array $fields) {
+        $outcomes = $fields['dynamic_guide_outcomes_hidden'];
+
+        if (!empty($outcomes) && is_string($outcomes)) {
+            $outcomes = json_decode($outcomes);
+
+            foreach ((array) $outcomes as $outcome) {
+                echo '<pre>' . print_r( $outcome, true ) . '</pre>';
+            }
+        }
+    }
+
+    private function getPosts(array $postIds) {
+        $posts = [];
+        foreach ($postIds as $postId) {
+            $post = get_post($postId);
+            if (!empty($post)) {
+                $post = \Municipio\Helper\Post::preparePostObject($post);
+                $posts[] = $post;
+            }
+        }
+
+        return $posts;
+    }
+
+    private function getResultPageValues(array $fields) {
+        $outcomeData  = $fields['dynamic_guide_outcomes'][0];
+
+        return $outcomeData;
     }
 
     private function getStartPageValues(array $fields): array {

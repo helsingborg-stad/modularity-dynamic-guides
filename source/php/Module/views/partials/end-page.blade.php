@@ -15,7 +15,7 @@
         'color' => 'primary',
         'icon' => 'arrow_forward',
         'classList' => ['u-margin__top--3'],
-        'attributeList' => ['data-js-dynamic-guide-get-results-button' => '']
+        'attributeList' => ['data-js-dynamic-guide-button' => '']
     ])
     @endbutton
 </div>
