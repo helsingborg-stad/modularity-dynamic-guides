@@ -1,4 +1,8 @@
 .dynamic-guide {
+    --color-white: var(--color-white, #ffffff);
+    --primary-contrasting: var(--color-secondary-contrasting, var(--color-white));
+    --primary-color: var(--color-secondary, #ae0b05);
+
     min-height: 100vh;
 
     .dynamic-guide__background-image {
@@ -43,6 +47,15 @@
 
         .dynamic-guide-restart {
             font-size: 0.8rem;
+        }
+    }
+
+    .dynamic-guide__answers {
+        background-color: var(--color-secondary);
+        text-align: left;
+        padding: 1rem 2rem;
+        li {
+            color: var(--color-secondary-contrasting);
         }
     }
 }

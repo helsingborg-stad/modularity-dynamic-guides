@@ -5,9 +5,9 @@
         @paper([
         'classList' => ['u-padding--6', 'dynamic-guide__guide-container']
         ])
-            @includeWhen($startPage, 'partials.start-page')
+            @includeWhen($startPage, 'guide.start-page')
             @includeWhen(!empty($steps), 'guide.steps')
-            @include('partials.end-page')
+            @include('guide.end-page')
             @button([
                 'style'             => 'basic',
                 'color'             => 'default',
@@ -21,6 +21,6 @@
         @endpaper
     </div>
     @else
-        @include('partials.results-page')
+        @include('guide.results-page')
     @endif
 </div>

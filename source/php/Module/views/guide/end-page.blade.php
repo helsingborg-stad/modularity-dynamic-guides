@@ -8,7 +8,7 @@
         Här är dina svar. Klicka för resultat.
     @endtypography
 
-    <div class="dynamic-guide__result" data-js-dynamic-guide-result></div>
+    <ul class="dynamic-guide__answers u-unlist u-rounded" data-js-dynamic-guide-answers></ul>
 <div>
     @button([
         'text' => "Hämta resultat",
@@ -30,5 +30,3 @@
 ])
 @endbutton
 </div>
-
-TODO: LÄGG TILL PROGRESSBAR

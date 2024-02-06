@@ -2,7 +2,7 @@ class Guide {
     index: number;
     choices: {[key: string]: string};
     restartButton: HTMLButtonElement;
-    resultContainer: HTMLDivElement;
+    answersContainer: HTMLElement;
     steps: HTMLDivElement[];
     backButton: HTMLButtonElement;
 
@@ -10,14 +10,18 @@ class Guide {
         this.index = 0;
         this.choices = {}; 
         this.restartButton = dynamicGuide.querySelector('[data-js-dynamic-guide-restart-button]') as HTMLButtonElement;
-        this.resultContainer = dynamicGuide.querySelector('[data-js-dynamic-guide-result]') as HTMLDivElement;
+        this.answersContainer = dynamicGuide.querySelector('[data-js-dynamic-guide-answers]') as HTMLElement;
         this.steps = [...(dynamicGuide.querySelectorAll('[data-js-dynamic-guide-step]'))] as HTMLDivElement[];
         this.backButton = dynamicGuide.querySelector('[data-js-dynamic-guide-back-button]') as HTMLButtonElement;
 
-        this.steps && this.backButton && this.setListeners();
+        this.containsAllElements() && this.setListeners();
     }
 
-    setListeners() {
+    private containsAllElements() {
+        return this.answersContainer && this.steps && this.backButton && this.restartButton;
+    }
+
+    private setListeners() {
         this.steps.forEach((step, index) => {
             const buttons = [...step.querySelectorAll('[data-js-dynamic-guide-button]')] as HTMLButtonElement[];
             buttons.forEach((button) => {
@@ -36,13 +40,13 @@ class Guide {
         });
 
         this.restartButton.addEventListener('click', () => {
-            const index = this.index;
+            const index = this.steps.length - 1;
             this.index = 0;
             this.updateGuideStep(index);
         })
     }
 
-    saveChoiceValue(step: HTMLDivElement, button: HTMLButtonElement){  
+    private saveChoiceValue(step: HTMLDivElement, button: HTMLButtonElement){  
         const stepAttribute = step.getAttribute('data-js-dynamic-guide-step');
         const buttonAttribute = button.getAttribute('data-js-dynamic-guide-button');
 
@@ -50,13 +54,26 @@ class Guide {
             this.choices[stepAttribute] = buttonAttribute;
 
             if (Object.keys(this.choices).length === this.steps.length - 2) {
-                console.log(this.choices);
+                this.createAnswersList()
             }
         }
     }
 
-    updateGuideStep(index: number) {
-        if (this.index >= 1 && !((this.index + 1) == this.steps.length)) {
+    private createAnswersList() {
+        let li = "";
+        for (const [answer, question] of Object.entries(this.choices)) {
+            li += this.createListItem(answer, question);
+        }
+
+        this.answersContainer.innerHTML = li;
+    }
+
+    private createListItem(answer: string, question: string) {
+        return `<li><b>${answer}:</b> ${question}</li>`
+    }
+
+    private updateGuideStep(index: number) {
+        if (this.index >= 1 && !((this.index + 1) >= this.steps.length)) {
             this.backButton.classList.remove('u-display--none');
         } else {
             this.backButton.classList.add('u-display--none');
@@ -70,7 +87,7 @@ class Guide {
         }
     }
 
-    getResults() {
+    private getResults() {
         const url = new URL(window.location.href);
         url.searchParams.set('outcome', JSON.stringify(this.choices));
         window.location.href = url.toString();
