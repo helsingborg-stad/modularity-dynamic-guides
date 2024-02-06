@@ -60,15 +60,17 @@ class Guide {
     }
 
     getResults() {
-        const urlParams = new URLSearchParams(Object.entries({
-            outcome: "",
-            ...this.choices,
-        }));
-    
-        const currentUrl = new URL(window.location.href);
-        currentUrl.search = urlParams.toString();
-        window.location.href = currentUrl.toString();
+        if (this.choices) {
+
+        const url = new URL(window.location);
+        let params = new URLSearchParams(url.search);
+ 
+        params.set('outcome', JSON.stringify(this.choices));
+        url.search = params.toString();
+ 
+        window.location.href = url.toString();
     }
+}
     
 }
 
