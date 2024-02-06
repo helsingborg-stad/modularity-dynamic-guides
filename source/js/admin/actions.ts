@@ -1,8 +1,17 @@
 import globalState from "./globalState";
+import SetupOutcomes from "./setupOutcomes";
+import SetupOptions from "./setupOptions";
 import Options from "./options";
+import {GlobalState} from 'dynamic-guides-interface';
+
+type SelectObject = { [key: string]: string };
+type SelectObjects = { [key: string]: SelectObject };
 
 class Actions {
-    constructor(group, outcomesInstance, optionsInstance) {
+    group: HTMLElement;
+    outcomesInstance: SetupOutcomes;
+    optionsInstance: SetupOptions;
+    constructor(group: HTMLElement, outcomesInstance: SetupOutcomes, optionsInstance: SetupOptions) {
         this.group = group;
         this.outcomesInstance = outcomesInstance;
         this.optionsInstance = optionsInstance;
@@ -10,8 +19,8 @@ class Actions {
         this.addActions();
     }
 
-    addActions() {
-        acf.addAction('remove', (el) => {
+    public addActions() {
+        acf.addAction('remove', (el: JQuery<HTMLElement>) => {
             const row = el[0];
             if (!row) return;
 
@@ -24,8 +33,8 @@ class Actions {
                     if (optgroup) {
                         optgroup.remove();
 
-                        if (globalState[instance]) {
-                            delete globalState[instance];
+                        if (instance && globalState.hasOwnProperty(instance)) {
+                            delete (globalState as GlobalState)[instance];
                         }
                     }
                 });
@@ -38,7 +47,7 @@ class Actions {
                 
                 if (removedOption && instance) {
                     this.outcomesInstance.selects.forEach(select => {
-                        const option = select.querySelector(`optgroup[dynamic-guide-optgroup="${instance}"] option[value="${removedOption.value}"]`);
+                        const option = select.querySelector(`optgroup[dynamic-guide-optgroup="${instance}"] option[value="${(removedOption as HTMLOptionElement).value}"]`);
                         
                         if (option) {
                             if (!choiceId) {
@@ -51,14 +60,18 @@ class Actions {
                         } 
                     });
                     
-                    if (choiceId && globalState[instance] && globalState[instance][choiceId]) {
-                            delete globalState[instance][choiceId];
+                    if (
+                        choiceId && 
+                        (globalState as GlobalState)[instance] && 
+                        (globalState as GlobalState)[instance][choiceId]
+                    ) {
+                            delete (globalState as GlobalState)[instance][choiceId];
                     }
                 }
             }
         });
 
-        acf.addAction('append', (el) => {
+        acf.addAction('append', (el: JQuery<HTMLElement>) => {
             const row = el[0];
             
             const stepRow = el?.find('[data-name="choices"]');
@@ -83,7 +96,9 @@ class Actions {
             
             if (choice[0]) {
                 const choicesGroup = row?.closest('[dynamic-guide-options-instance]');
-                this.choiceRowAdded(choicesGroup, choice[0]);
+                if (choicesGroup) {
+                    this.choiceRowAdded(choicesGroup, choice[0]);
+                }
                 return;
             }
 
@@ -91,26 +106,28 @@ class Actions {
 
             if (outcomeSelect) {
                 this.outcomesInstance.selects.push(outcomeSelect);
-                this.setupNewSelect(outcomeSelect);
+                if (outcomeSelect) {
+                    this.setupNewSelect((outcomeSelect as HTMLElement));
+                }
                 return;
             }
         });
 
-        acf.add_filter('validation_complete', (json, $form) => {
-            const selectObjects = {};
-            this.outcomesInstance.getSelects().forEach((select, index) => {
+        acf.add_filter('validation_complete', (json: Object, $form: Object) => {
+            const selectObjects: SelectObjects = {};
+            this.outcomesInstance.getSelects().forEach((select: HTMLSelectElement, index: number) => {
                 const selected = select.selectedOptions;
-                let selectObject = {};
-    
+                let selectObject: SelectObject = {};
+
                 for (const option of selected) {
-                    const optiongroupLabel = option.parentElement?.label;
+                    const optgroup = option.parentElement;
+                    const optiongroupLabel = (optgroup as HTMLOptGroupElement)?.label;
     
                     if (optiongroupLabel) {
                         selectObject[optiongroupLabel] = option.value;
                     }
                 }
-    
-                selectObjects[index] = selectObject;
+                    selectObjects[index] = selectObject;
             });
     
             this.outcomesInstance.hiddenField.val(JSON.stringify(selectObjects));
@@ -119,37 +136,37 @@ class Actions {
         });
     }
 
-    stepRowAdded(stepRow, heading) {
+    private stepRowAdded(stepRow: JQuery<HTMLElement>, heading: JQuery<HTMLElement>) {
         const key = globalState.generateUniqueKey();
         stepRow.attr('dynamic-guide-options-instance', key);
 
-        if (!globalState[key]) {
-            globalState[key] = {};
+        if (!(globalState as GlobalState)[key]) {
+            (globalState as GlobalState)[key] = {};
         }
 
         
         const optionsInstance = new Options(key, this.group);
-        if (!globalState[key]['instance']) {
-            globalState[key]['instance'] = optionsInstance;
+        if (!(globalState as GlobalState)[key]['instance']) {
+            (globalState as GlobalState)[key]['instance'] = optionsInstance;
         }
 
-        globalState[key]['instance'].setupListeners(heading, []);
+        (globalState as GlobalState)[key]['instance'].setupListeners(heading, []);
     }
 
-    choiceRowAdded(choicesGroup, choice) {
+    private choiceRowAdded(choicesGroup: Element, choice: JQuery<HTMLElement>) {
         const instance = choicesGroup?.getAttribute('dynamic-guide-options-instance');
 
-        if (choice && instance && globalState[instance]['instance']) {
-            globalState[instance]['instance'].listenToChoice(choice);
+        if (choice && instance && (globalState as GlobalState)[instance]['instance']) {
+            (globalState as GlobalState)[instance]['instance'].listenToChoice(choice);
         }
     }
 
-    setupNewSelect(outcomeSelect) {
-        if (outcomeSelect[0] && outcomeSelect[0].$el) {
-            return;
-        }
+    private setupNewSelect(outcomeSelect: HTMLElement) {
+        // if (outcomeSelect[0] && outcomeSelect[0].$el) {
+        //     return;
+        // }
         for (const step in globalState) {
-            for (const key in globalState[step]) {
+            for (const key in (globalState as GlobalState)[step]) {
                 if (key === 'heading') {
                     this.outcomesInstance.createOptions(outcomeSelect, {'key': step, 'type': 'heading', 'choiceKey': false});
                 } else if(key !== 'instance') {
