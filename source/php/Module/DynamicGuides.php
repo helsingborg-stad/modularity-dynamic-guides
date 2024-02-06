@@ -2,15 +2,18 @@
 
 namespace ModularityDynamicGuides\Module;
 
+/**
+ * Class DynamicGuides
+ * @package ModularityDynamicGuides\Module
+ */
 class DynamicGuides extends \Modularity\Module
 {
     public $slug = 'dynamic-guide';
     public $supports = array();
-    public $blockSupports = array(
-        'align' => ['full'],
-        'mode' => false
-    );
 
+    /**
+     * Initialize the module
+     */
     public function init()
     {
         //Define module
@@ -44,6 +47,11 @@ class DynamicGuides extends \Modularity\Module
         return $data;
     }
 
+    /**
+     * Get outcome data
+     * @param array $fields
+     * @return array|false
+     */
     private function getOutcome(array $fields) 
     {
         if (!isset($_GET['outcome'])) { return false; }
@@ -67,6 +75,11 @@ class DynamicGuides extends \Modularity\Module
         return \Municipio\Helper\FormatObject::camelCase($outcome);
     }
 
+
+    /**
+     * Get default outcome values
+     * @return array
+     */
     private function defaultOutcomeValues(): array 
     {
         return [
@@ -76,13 +89,17 @@ class DynamicGuides extends \Modularity\Module
         ];
     }
 
-
-
+    /**
+     * Get outcome index based on URL parameters
+     * @param array $fields
+     * @return false|int
+     */
     private function getOutcomeIndex(array $fields) {
         $outcomes = $fields['dynamic_guide_outcomes_hidden'];
         $urlOutcome = stripslashes($_GET['outcome']);
         $urlOutcome = (array) json_decode($urlOutcome, false);
 
+        
         
         if (!empty($urlOutcome) && !empty($outcomes) && is_string($outcomes)) {
             $outcomes = (array) json_decode($outcomes);
@@ -103,6 +120,12 @@ class DynamicGuides extends \Modularity\Module
         return false;
     }
 
+    /**
+     * Check if array keys match
+     * @param array $outcome
+     * @param array $urlOutcome
+     * @return bool
+     */
     private function checkSameArrayKeys(array $outcome, array $urlOutcome)
     {
         ksort($outcome);
@@ -122,6 +145,12 @@ class DynamicGuides extends \Modularity\Module
         return $matchingValues;
     }
 
+
+    /**
+     * Get posts based on post IDs
+     * @param array $postIds
+     * @return array
+     */
     private function getPosts(array $postIds) 
     {
         $posts = [];
@@ -136,6 +165,11 @@ class DynamicGuides extends \Modularity\Module
         return $posts;
     }
 
+    /**
+     * Get start page values
+     * @param array $fields
+     * @return array
+     */
     private function getStartPageValues(array $fields): array 
     {
         $startPage = !empty($fields['dynamic_guide_start_page']) ? 
@@ -145,12 +179,21 @@ class DynamicGuides extends \Modularity\Module
         return $startPage;
     }
 
+    /**
+     * Get choices steps
+     * @param array $fields
+     * @return false|array
+     */
     private function getChoicesSteps(array $fields) 
     {
         return !empty($fields['dynamic_guide_steps']) ? $fields['dynamic_guide_steps'] : false;
     }
 
-    private function defaultStartPageValues() 
+    /**
+     * Get default start page values
+     * @return array
+     */
+    private function defaultStartPageValues(): array
     {
         return [
             'heading' => '',
@@ -159,6 +202,11 @@ class DynamicGuides extends \Modularity\Module
         ];
     }
 
+    /**
+     * Get image data based on attachment ID
+     * @param $id
+     * @return false|array
+     */
     private function getImageFromId($id) 
     {
         if ($id && class_exists('\Municipio\Helper\Image')) {
@@ -168,6 +216,11 @@ class DynamicGuides extends \Modularity\Module
         return false;
     }
 
+
+    /**
+     * Get the template file for the module
+     * @return string
+     */
     public function template(): string
     {
         return "dynamic-guide.blade.php";
