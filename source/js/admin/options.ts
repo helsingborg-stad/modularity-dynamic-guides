@@ -1,18 +1,23 @@
 import globalState from './globalState';
+import { GlobalState, AcfField } from 'dynamic-guides-interface';
 
 class Options {
-    constructor(key, group) {
-        this.key = key;
+    group: HTMLElement;
+    key: string;
+    choiceIndex: number;
+
+    constructor(key: string, group: HTMLElement) {
         this.group = group;
+        this.key = key;
         this.choiceIndex = 0;
     }
 
-    setupListeners(heading, choices) {
+    public setupListeners(heading: AcfField, choices: Array<AcfField>) {
         const input = heading.$el.find('input');
         if (!input) return;
-
+        
         let currentHeadingsValue = input.val();
-        this.saveValueGlobally('heading', currentHeadingsValue);
+        this.saveValueGlobally('heading', currentHeadingsValue ?? false);
         this.group.dispatchEvent(this.createCustomEvent('heading'));
 
         input.focus(() => {
@@ -20,7 +25,7 @@ class Options {
         });
         
         input.change(() => {
-            this.saveValueGlobally('heading', input.val());
+            this.saveValueGlobally('heading', input.val() ?? false);
             this.group.dispatchEvent(this.createCustomEvent('heading'));   
         });
         
@@ -29,13 +34,13 @@ class Options {
         });
     }
 
-    listenToChoice(choice) {
+    private listenToChoice(choice: AcfField) {
         const input = choice.$el.find('input');
         if (!input) return;
 
         let currentChoiceValue = input.val();
         const choiceIndex = this.choiceIndex;
-        this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, currentChoiceValue);
+        this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, currentChoiceValue ?? false);
         this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_'+ this.key));
 
         input.focus((e) => {
@@ -43,18 +48,18 @@ class Options {
         });
 
         input.change((e) => {
-            this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, input.val());
+            this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, input.val() ?? false);
             this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_'+ this.key));   
         });
 
         this.choiceIndex ++;
     }
 
-    saveValueGlobally(key, value) {
-        globalState[this.key][key] = value;
+    private saveValueGlobally(key: string, value: string|false) {
+        (globalState as GlobalState)[this.key][key] = value;
     }
 
-    createCustomEvent(type, choiceKey = false) {
+   private createCustomEvent(type: string, choiceKey: string|false = false) {
         let args = {
             'detail': {
                 'key': this.key,
@@ -63,7 +68,7 @@ class Options {
             }
         };
 
-        return new CustomEvent('customEvent', args);
+        return new CustomEvent('dynamicGuidesCustomEvent', args);
     }
 }
 

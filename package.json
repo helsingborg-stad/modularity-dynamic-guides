@@ -55,5 +55,8 @@
     "plugins": [
       "@babel/plugin-proposal-class-properties"
     ]
+  },
+  "dependencies": {
+    "@types/jquery": "^3.5.29"
   }
 }

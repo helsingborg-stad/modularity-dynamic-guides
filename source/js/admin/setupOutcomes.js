@@ -28,7 +28,7 @@ class SetupOutcomes {
     }
     
     setupAlreadyCreatedSelects() {
-        this.group.addEventListener('customEvent', (e) => {
+        this.group.addEventListener('dynamicGuidesCustomEvent', (e) => {
             this.selects.forEach((select, index) => {
                 this.createOptions(select, e.detail);
                 if (this.hiddenFieldValue[index]) {
