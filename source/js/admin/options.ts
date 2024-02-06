@@ -15,9 +15,9 @@ class Options {
     public setupListeners(heading: AcfField, choices: Array<AcfField>) {
         const input = heading.$el.find('input');
         if (!input) return;
-
+        
         let currentHeadingsValue = input.val();
-        this.saveValueGlobally('heading', currentHeadingsValue ?? "");
+        this.saveValueGlobally('heading', currentHeadingsValue ?? false);
         this.group.dispatchEvent(this.createCustomEvent('heading'));
 
         input.focus(() => {
@@ -25,7 +25,7 @@ class Options {
         });
         
         input.change(() => {
-            this.saveValueGlobally('heading', input.val() ?? "");
+            this.saveValueGlobally('heading', input.val() ?? false);
             this.group.dispatchEvent(this.createCustomEvent('heading'));   
         });
         
@@ -40,7 +40,7 @@ class Options {
 
         let currentChoiceValue = input.val();
         const choiceIndex = this.choiceIndex;
-        this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, currentChoiceValue ?? "");
+        this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, currentChoiceValue ?? false);
         this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_'+ this.key));
 
         input.focus((e) => {
@@ -48,14 +48,14 @@ class Options {
         });
 
         input.change((e) => {
-            this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, input.val() ?? "");
+            this.saveValueGlobally('choice-' + choiceIndex + '_'+ this.key, input.val() ?? false);
             this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_'+ this.key));   
         });
 
         this.choiceIndex ++;
     }
 
-    private saveValueGlobally(key: string, value: string) {
+    private saveValueGlobally(key: string, value: string|false) {
         (globalState as GlobalState)[this.key][key] = value;
     }
 

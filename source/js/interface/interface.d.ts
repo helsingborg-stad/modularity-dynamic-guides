@@ -18,4 +18,8 @@ declare module 'dynamic-guides-interface' {
     interface AcfField {
         $el: JQuery<HTMLElement>;
     }
+
+    interface HiddenFieldValue {
+        [key: number]: any;
+    }
 }
