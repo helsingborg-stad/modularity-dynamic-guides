@@ -5,6 +5,7 @@ class Guide {
     answersContainer: HTMLElement;
     steps: HTMLDivElement[];
     backButton: HTMLButtonElement;
+    resetButton: HTMLButtonElement;
 
     constructor(dynamicGuide: HTMLDivElement) {
         this.index = 0;
@@ -13,16 +14,13 @@ class Guide {
         this.answersContainer = dynamicGuide.querySelector('[data-js-dynamic-guide-answers]') as HTMLElement;
         this.steps = [...(dynamicGuide.querySelectorAll('[data-js-dynamic-guide-step]'))] as HTMLDivElement[];
         this.backButton = dynamicGuide.querySelector('[data-js-dynamic-guide-back-button]') as HTMLButtonElement;
-
-        this.containsAllElements() && this.setListeners();
-    }
-
-    private containsAllElements() {
-        return this.answersContainer && this.steps && this.backButton && this.restartButton;
+        this.resetButton = dynamicGuide.querySelector('[data-js-dynamic-guide-endpage-back-button]') as HTMLButtonElement; 
+        this.setListeners();
     }
 
     private setListeners() {
-        this.steps.forEach((step, index) => {
+       
+       this.steps && this.steps.forEach((step, index) => {
             const buttons = [...step.querySelectorAll('[data-js-dynamic-guide-button]')] as HTMLButtonElement[];
             buttons.forEach((button) => {
                 button.addEventListener('click', () => {
@@ -33,17 +31,27 @@ class Guide {
             });
         });
 
-        this.backButton.addEventListener('click', () => {
+       this.backButton && this.backButton.addEventListener('click', () => {
             const index = this.index;
             this.index--;
             this.updateGuideStep(index)
         });
 
-        this.restartButton.addEventListener('click', () => {
+        this.restartButton && this.restartButton.addEventListener('click', () => {
             const index = this.steps.length - 1;
             this.index = 0;
             this.updateGuideStep(index);
-        })
+        });
+
+        this.resetButton && this.resetButton.addEventListener('click', () => {
+            this.resetGuide();
+        });
+    }
+    
+    private resetGuide(){
+        const url = new URL(window.location.href);
+        url.searchParams.delete('outcome');
+        window.location.href = url.toString();    
     }
 
     private saveChoiceValue(step: HTMLDivElement, button: HTMLButtonElement){  
@@ -92,6 +100,8 @@ class Guide {
         url.searchParams.set('outcome', JSON.stringify(this.choices));
         window.location.href = url.toString();
     }
+
+
 }
 
 export default Guide;
