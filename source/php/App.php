@@ -9,13 +9,13 @@ class App
         add_action('plugins_loaded', array($this, 'registerModule'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdmin'));
         add_action('wp_enqueue_scripts', array($this, 'enqueueFrontend'));
+        add_action('acf/validate_save_post/name=dynamic_guide_outcomes_hidden', array($this,'validateOutcomes'));
 
         $this->cacheBust = new \ModularityDynamicGuides\Helper\CacheBust();
     }
 
-    public function setHiddenValue($postId) {
-        print_r($postId);
-        print_r(get_fields($postId));
+    public function validateOutcomes($valid, $value, $field, $inputName) {
+        echo '<pre>' . print_r( "hello", true ) . '</pre>';
         die;
     }
 

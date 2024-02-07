@@ -37,7 +37,7 @@
 @button([
     'style' => 'basic',
     'color' => 'default',
-    'text' => 'Starta om guiden',
+    'text' => $resultsPage['restart_button_label'],
     'icon' => 'arrow_back',
     'reversePositions' => 'true',
     'classList' => ['u-margin__right--auto', 'u-margin__top--3'],

@@ -5,13 +5,13 @@
         'variant' => 'h1',
         'classList' => ['u-margin__bottom--4']
     ])
-        Här är dina svar. Klicka för resultat.
+        {{$endPage['heading']}}
     @endtypography
 
     <ul class="dynamic-guide__answers u-unlist u-rounded" data-js-dynamic-guide-answers></ul>
 <div>
     @button([
-        'text' => "Hämta resultat",
+        'text' => $endPage['result_button_label'],
         'color' => 'primary',
         'icon' => 'arrow_forward',
         'classList' => ['u-margin__top--3'],
@@ -23,7 +23,7 @@
 @button([
     'style' => 'basic',
     'color' => 'default',
-    'text' => 'Inte rätt? Starta om guiden',
+    'text' => $endPage['restart_button_label'],
     'reversePositions' => 'true',
     'classList' => ['dynamic-guide-restart'],
     'attributeList' => ['data-js-dynamic-guide-restart-button' => '']

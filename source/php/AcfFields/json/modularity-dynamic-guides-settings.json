@@ -153,8 +153,8 @@
                 },
                 {
                     "key": "field_65c250a318baf",
-                    "label": "Button label",
-                    "name": "button_label",
+                    "label": "Result button label",
+                    "name": "result_button_label",
                     "aria-label": "",
                     "type": "text",
                     "instructions": "The button label to get the result of the guide.",
@@ -197,13 +197,56 @@
             "acfe_group_modal_size": "large"
         },
         {
+            "key": "field_65c32a399cbd2",
+            "label": "Results page",
+            "name": "dynamic_guide_results_page",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "acfe_seamless_style": 0,
+            "acfe_group_modal": 0,
+            "sub_fields": [
+                {
+                    "key": "field_65c32a529cbd3",
+                    "label": "Restart guide button label",
+                    "name": "restart_button_label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "The label for the button to restart the guide after getting the results",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                }
+            ],
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large"
+        },
+        {
             "key": "field_65b78add784cd",
             "label": "Steps",
             "name": "dynamic_guide_steps",
             "aria-label": "",
             "type": "repeater",
             "instructions": "Create one for each step in the guide",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -468,7 +511,7 @@
             "aria-label": "",
             "type": "acfe_hidden",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",

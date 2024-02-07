@@ -38,6 +38,8 @@ class DynamicGuides extends \Modularity\Module
         $data = [];
         $fields = get_fields($this->ID);
         $data['startPage'] = $this->getStartPageValues($fields);
+        $data['endPage'] = $this->getEndPageValues($fields);
+        $data['resultsPage'] = $this->getResultsPageValues($fields);
         $data['steps'] = $this->getChoicesSteps($fields);
         $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? 
         $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
@@ -56,9 +58,8 @@ class DynamicGuides extends \Modularity\Module
         if (!isset($_GET['outcome'])) { return false; }
         $outcomes = $fields['dynamic_guide_outcomes'];
         $outcomeIndex = $this->getOutcomeIndex($fields);
-
         if ($outcomeIndex === false || empty($outcomes[$outcomeIndex])) {
-           return false;
+            return false;
         }
 
         $outcome = array_merge($this->defaultOutcomeValues(), $outcomes[$outcomeIndex]);
@@ -179,6 +180,32 @@ class DynamicGuides extends \Modularity\Module
     }
 
     /**
+     * Get end page values
+     * @param array $fields
+     * @return array
+     */
+    private function getEndPageValues(array $fields) {
+        $endPage = !empty($fields['dynamic_guide_end_page']) ? 
+        array_merge($this->defaultEndPageValues(), $fields['dynamic_guide_end_page']) : 
+        [];
+
+        return $endPage;
+    }
+    
+    /**
+     * Get results page values
+     * @param array $fields
+     * @return array
+     */
+    private function getResultsPageValues(array $fields) {
+        $resultsPage = !empty($fields['dynamic_guide_results_page']) ? 
+        array_merge($this->defaultResultsPageValues(), $fields['dynamic_guide_results_page']) : 
+        [];
+
+        return $resultsPage;
+    }
+
+    /**
      * Get choices steps
      * @param array $fields
      * @return false|array
@@ -198,6 +225,30 @@ class DynamicGuides extends \Modularity\Module
             'heading' => '',
             'preamble' => '',
             'button_label' => '',
+        ];
+    }
+    
+    /**
+     * Get default start page values
+     * @return array
+     */
+    private function defaultEndPageValues(): array
+    {
+        return [
+            'heading' => '',
+            'result_button_label' => '',
+            'restart_button_label' => '',
+        ];
+    }
+    
+    /**
+     * Get default start page values
+     * @return array
+     */
+    private function defaultResultsPageValues(): array
+    {
+        return [
+            'restart_button_label' => '',
         ];
     }
 
