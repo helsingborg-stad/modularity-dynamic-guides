@@ -1,3 +1,4 @@
+@if($outcome->outcomeTitle || $outcome->outcomeContent)
 @segment([
     'title'         => $outcome->outcomeTitle,
     'content'       => $outcome->outcomeContent,
@@ -9,15 +10,17 @@
     'imageFocus'    => ['top' => '90', 'left' => '100'],
 ])
  
- 
-@button([
-    'variant'       => 'default',
-    'text'          => 'Ladda ner checklista',
-    'icon'          => 'arrow_forward',
-])
-@endbutton
- 
+ @if($outcome->outcomeCallToActionLabel && $outcome->outcomeCallToActionUrl)
+    @button([
+        'variant'       => 'default',
+        'text'          => $outcome->outcomeCallToActionLabel,
+        'icon'          => 'arrow_forward',
+        'href'          => $outcome->outcomeCallToActionUrl,
+    ])
+    @endbutton
+ @endif
 @endsegment
+@endif
  @if ($outcome->outcomePosts)
     <div class="o-grid">
         @foreach($outcome->outcomePosts as $post)    

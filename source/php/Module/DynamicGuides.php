@@ -86,6 +86,8 @@ class DynamicGuides extends \Modularity\Module
             'outcome_posts' => false,
             'outcome_content' => false,
             'outcome_title' => false,
+            'outcome_call_to_action_label' => false,
+            'outcome_call_to_action_url' => false,
         ];
     }
 
