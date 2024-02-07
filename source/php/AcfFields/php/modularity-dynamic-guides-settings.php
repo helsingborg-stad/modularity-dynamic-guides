@@ -49,6 +49,9 @@
             'layout' => 'block',
             'acfe_seamless_style' => 0,
             'acfe_group_modal' => 0,
+            'acfe_group_modal_close' => 0,
+            'acfe_group_modal_button' => '',
+            'acfe_group_modal_size' => 'large',
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_65b3a5735e4bd',
@@ -112,9 +115,6 @@
                     'append' => '',
                 ),
             ),
-            'acfe_group_modal_close' => 0,
-            'acfe_group_modal_button' => '',
-            'acfe_group_modal_size' => 'large',
         ),
         2 => array(
             'key' => 'field_65c2503d18bae',
@@ -133,6 +133,9 @@
             'layout' => 'block',
             'acfe_seamless_style' => 0,
             'acfe_group_modal' => 0,
+            'acfe_group_modal_close' => 0,
+            'acfe_group_modal_button' => '',
+            'acfe_group_modal_size' => 'large',
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_65c2510318bb0',
@@ -195,9 +198,6 @@
                     'append' => '',
                 ),
             ),
-            'acfe_group_modal_close' => 0,
-            'acfe_group_modal_button' => '',
-            'acfe_group_modal_size' => 'large',
         ),
         3 => array(
             'key' => 'field_65c32a399cbd2',
@@ -216,6 +216,9 @@
             'layout' => 'block',
             'acfe_seamless_style' => 0,
             'acfe_group_modal' => 0,
+            'acfe_group_modal_close' => 0,
+            'acfe_group_modal_button' => '',
+            'acfe_group_modal_size' => 'large',
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_65c32a529cbd3',
@@ -238,9 +241,6 @@
                     'append' => '',
                 ),
             ),
-            'acfe_group_modal_close' => 0,
-            'acfe_group_modal_button' => '',
-            'acfe_group_modal_size' => 'large',
         ),
         4 => array(
             'key' => 'field_65b78add784cd',
@@ -307,6 +307,7 @@
                     'collapsed' => '',
                     'button_label' => __('Add Row', 'modularity-dynamic-guides'),
                     'rows_per_page' => 20,
+                    'parent_repeater' => 'field_65b78add784cd',
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_65b78b92784cf',
@@ -330,7 +331,6 @@
                             'parent_repeater' => 'field_65b78b84784ce',
                         ),
                     ),
-                    'parent_repeater' => 'field_65b78add784cd',
                 ),
             ),
         ),
@@ -492,20 +492,41 @@
                 ),
                 5 => array(
                     'key' => 'field_65c0a48f6d243',
-                    'label' => __('Link', 'modularity-dynamic-guides'),
-                    'name' => 'outcome_link',
+                    'label' => __('Call To Action Url', 'modularity-dynamic-guides'),
+                    'name' => 'outcome_call_to_action_url',
                     'aria-label' => '',
                     'type' => 'url',
                     'instructions' => '',
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
-                        'width' => '',
+                        'width' => '50',
                         'class' => '',
                         'id' => '',
                     ),
                     'default_value' => '',
                     'placeholder' => '',
+                    'parent_repeater' => 'field_65b8b17f91cdf',
+                ),
+                6 => array(
+                    'key' => 'field_65c388d95871b',
+                    'label' => __('Call To Action Label', 'modularity-dynamic-guides'),
+                    'name' => 'outcome_call_to_action_label',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
                     'parent_repeater' => 'field_65b8b17f91cdf',
                 ),
             ),
