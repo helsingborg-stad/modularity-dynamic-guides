@@ -56,7 +56,7 @@ class App
      * @param string $hiddenOutcomesJson JSON string containing hidden outcomes.
      * @return array Hidden outcomes array.
      */
-    private function getHiddenOutcomes($hiddenOutcomesJson) {
+    private function getHiddenOutcomes(string $hiddenOutcomesJson): array {
         $hiddenOutcomesJson = stripslashes($hiddenOutcomesJson);
         
         if (!empty($hiddenOutcomesJson)) {
@@ -76,7 +76,7 @@ class App
      * @param array $steps Selected steps.
      * @return array Step choices array.
      */
-    private function getStepChoices($steps) {
+    private function getStepChoices(array $steps): array {
         $stepChoices = [];
             foreach ($steps as $step) {
                 if (
@@ -108,7 +108,7 @@ class App
      * @param array $outcomesDiff Array of missing outcomes differences.
      * @return string HTML string for missing outcomes.
      */
-    private function getOutcomesDiffString($outcomesDiff) {
+    private function getOutcomesDiffString(array $outcomesDiff): string {
         $diff = "";
         foreach ($outcomesDiff as $outcome) {
             if (is_array($outcome)) {
@@ -152,7 +152,7 @@ class App
      * @param array $currentOutcome Current outcome being calculated.
      * @return array All possible outcomes.
      */
-    private function calculateOutcomes($steps, $currentOutcome = []) {
+    private function calculateOutcomes(array $steps, array $currentOutcome = []): array {
         $allOutcomes = [];
 
         if (empty($steps)) {
