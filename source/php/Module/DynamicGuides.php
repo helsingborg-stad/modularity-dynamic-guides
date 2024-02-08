@@ -16,7 +16,6 @@ class DynamicGuides extends \Modularity\Module
      */
     public function init()
     {
-        //Define module
         $this->nameSingular = __("Dynamic guide", 'modularity-dynamic-guides');
         $this->namePlural = __("Dynamic guides", 'modularity-dynamic-guides');
         $this->description = __("Creates dynamic guides.", 'modularity-dynamic-guides');
