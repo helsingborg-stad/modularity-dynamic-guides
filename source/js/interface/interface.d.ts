@@ -1,7 +1,7 @@
 // interface.d.ts
 declare module 'dynamic-guides-interface' {
     interface CustomEventWithDetail extends CustomEvent {
-        detail: eventDetailObject;
+        detail: EventDetailObject;
     }
 
     interface EventDetailObject {
@@ -16,10 +16,13 @@ declare module 'dynamic-guides-interface' {
     }
 
     interface AcfField {
-        $el: JQuery<HTMLElement>;
+        $el: JQuery<HTMLElement>; 
+        val(): string;
     }
 
     interface HiddenFieldValue {
-        [key: number]: any;
+        [key: number]: {
+            [key: string]: string
+        };
     }
 }
