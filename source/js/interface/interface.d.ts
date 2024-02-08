@@ -1,4 +1,3 @@
-// interface.d.ts
 declare module 'dynamic-guides-interface' {
     interface CustomEventWithDetail extends CustomEvent {
         detail: eventDetailObject;
