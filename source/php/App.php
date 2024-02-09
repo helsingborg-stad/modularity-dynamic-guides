@@ -19,8 +19,7 @@ class App
      */
     public function validateOutcomes() {
         global $_POST;
-        
-        if (!$_POST['acf']['field_65b8b17f91cdf']) return;
+        if (empty($_POST['acf']['field_65b8b17f91cdf'])) return;
 
         $outcomes = [];
         $hiddenOutcomes = [];
@@ -41,6 +40,7 @@ class App
         
         $outcomesDiff = $this->compareArrays($outcomes, $hiddenOutcomes);
         $isError = false;
+
         if (!empty($outcomesDiff)) {
             $isError = $this->getOutcomesDiffString($outcomesDiff);
         }
@@ -124,7 +124,7 @@ class App
             }
         }
 
-        return $diff = '<b style="font-size: 1.1rem;">Missing outcomes:</b><ol>' . rtrim($diff, ',<br><br>' . '</ol>' );
+        return $diff = '<b style="font-size: 1.1rem;">Missing outcomes:</b><ol>' . $diff . '</ol>';
     }
 
     /**
