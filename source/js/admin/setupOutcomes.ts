@@ -37,7 +37,11 @@ class SetupOutcomes {
 
             this.selects.forEach((select, index) => {
                 this.createOptions(select, dynamicGuidesCustomEvent.detail);
-                if (Array.isArray(this.hiddenFieldValue) && this.hiddenFieldValue[index]) {
+                if (
+                    this.hiddenFieldValue &&
+                    typeof this.hiddenField === 'object' &&
+                    this.hiddenFieldValue[index]
+                ) {
                     for (const key in this.hiddenFieldValue[index]) {
                         const preSelect = select.querySelector(`optgroup[label="${key}"] option[value="${this.hiddenFieldValue[index][key]}"]`) as HTMLOptionElement;
 
