@@ -63,7 +63,7 @@ class Actions {
             }
                 selectObjects[index] = selectObject;
         });
-
+        
         this.outcomesInstance.hiddenField.val(JSON.stringify(selectObjects));
     }
 
@@ -101,9 +101,9 @@ class Actions {
         const outcomeSelect = row?.querySelector('[data-name="outcome"] select');
 
         if (outcomeSelect) {
-            this.outcomesInstance.selects.push(outcomeSelect);
+            this.outcomesInstance.selects.push(outcomeSelect as HTMLSelectElement);
             if (outcomeSelect) {
-                this.setupNewSelect((outcomeSelect as HTMLElement));
+                this.setupNewSelect((outcomeSelect as HTMLSelectElement));
             }
             return;
         }
@@ -132,7 +132,7 @@ class Actions {
         if (optionRemoved) {
             const instance = optionRemoved.getAttribute('dynamic-guide-options-instance');
             const removedOption = row.querySelector('[data-name="choice"] input');
-            let choiceId = false;
+            let choiceId: string | false | null = false;
             
             if (removedOption && instance) {
                 this.outcomesInstance.selects.forEach(select => {
@@ -184,7 +184,7 @@ class Actions {
         }
     }
 
-    private setupNewSelect(outcomeSelect: HTMLElement) {
+    private setupNewSelect(outcomeSelect: HTMLSelectElement) {
         for (const step in globalState) {
             for (const key in (globalState as GlobalState)[step]) {
                 if (key === 'heading') {
