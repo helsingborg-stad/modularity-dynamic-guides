@@ -83,9 +83,12 @@ class DynamicGuides extends \Modularity\Module
     private function defaultOutcomeValues(): array 
     {
         return [
-            'outcome_posts' => false,
-            'outcome_content' => false,
-            'outcome_title' => false,
+            'outcome_posts'                 => false,
+            'outcome_content'               => false,
+            'outcome_title'                 => false,
+            'outcome_image'                 => false,
+            'outcome_call_to_action_url'    => false,
+            'outcome_call_to_action_label'  => false
         ];
     }
 

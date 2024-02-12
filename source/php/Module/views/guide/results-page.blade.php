@@ -9,13 +9,15 @@
     'imageFocus'    => ['top' => '90', 'left' => '100'],
 ])
  
- 
-@button([
-    'variant'       => 'default',
-    'text'          => 'Ladda ner checklista',
-    'icon'          => 'arrow_forward',
-])
-@endbutton
+@if($outcome->outcomeCallToActionUrl && $outcome->outcomeCallToActionLabel)
+    @button([
+        'variant'       => 'default',
+        'text'          => $outcome->outcomeCallToActionLabel,
+        'icon'          => 'arrow_forward',
+        'href'          => $outcome->outcomeCallToActionUrl
+    ])
+    @endbutton
+@endif
  
 @endsegment
  @if ($outcome->outcomePosts)
