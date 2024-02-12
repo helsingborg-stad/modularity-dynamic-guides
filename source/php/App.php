@@ -4,6 +4,8 @@ namespace ModularityDynamicGuides;
 
 class App
 {
+    private $cacheBust;
+    
     public function __construct()
     {
         add_action('plugins_loaded', array($this, 'registerModule'));
