@@ -15,7 +15,9 @@
         }
     ],
     "autoload": {
-        "psr-4": {"ModularityDynamicGuides\\": "source/php/"}
+        "psr-4": {
+            "ModularityDynamicGuides\\": "source/php/"
+        }
     },
     "minimum-stability": "stable",
     "require-dev": {
@@ -27,5 +29,6 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    }
+    },
+    "version": "1.2.4"
 }
