@@ -10,6 +10,7 @@ class DynamicGuides extends \Modularity\Module
 {
     public $slug = 'dynamic-guide';
     public $supports = array();
+    public $cacheTtl = 0;
 
     /**
      * Initialize the module
