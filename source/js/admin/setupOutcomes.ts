@@ -45,7 +45,8 @@ class SetupOutcomes {
 
             this.selects.forEach((select, index) => {
                 this.createOptions(select, dynamicGuidesCustomEvent.detail);
-                if (this.hiddenFieldValue &&
+                if (
+                    this.hiddenFieldValue &&
                     typeof this.hiddenField === 'object' &&
                     this.hiddenFieldValue[index]
                 ) {
