@@ -18,8 +18,10 @@ class Guide {
         this.setListeners();
     }
 
+    /**
+     * Sets up event listeners for buttons and handles user interactions.
+     */
     private setListeners() {
-       
        this.steps && this.steps.forEach((step, index) => {
             const buttons = [...step.querySelectorAll('[data-js-dynamic-guide-button]')] as HTMLButtonElement[];
             buttons.forEach((button) => {
@@ -48,12 +50,20 @@ class Guide {
         });
     }
     
+    /**
+     * Resets the guide by removing the 'outcome' parameter from the URL.
+     */
     private resetGuide(){
         const url = new URL(window.location.href);
         url.searchParams.delete('outcome');
         window.location.href = url.toString();    
     }
 
+    /**
+     * Saves the user's choice for the current step and updates the choices object.
+     * @param {HTMLDivElement} step - The HTML element representing the current step.
+     * @param {HTMLButtonElement} button - The HTML button representing the chosen option.
+     */
     private saveChoiceValue(step: HTMLDivElement, button: HTMLButtonElement){  
         const stepAttribute = step.getAttribute('data-js-dynamic-guide-step');
         const buttonAttribute = button.getAttribute('data-js-dynamic-guide-button');
@@ -67,6 +77,9 @@ class Guide {
         }
     }
 
+    /**
+     * Creates a list of answers and questions in the answers container.
+     */
     private createAnswersList() {
         let li = "";
         for (const [answer, question] of Object.entries(this.choices)) {
@@ -76,10 +89,20 @@ class Guide {
         this.answersContainer.innerHTML = li;
     }
 
-    private createListItem(answer: string, question: string) {
+    /**
+     * Creates an HTML list item with the specified answer and question.
+     * @param {string} answer - The chosen answer.
+     * @param {string} question - The associated question.
+     * @returns {string} - The HTML list item.
+     */
+    private createListItem(answer: string, question: string): string {
         return `<li><b>${answer}:</b> ${question}</li>`
     }
 
+    /**
+     * Updates the display of guide steps based on the current index.
+     * @param {number} index - The current index.
+     */
     private updateGuideStep(index: number) {
         if (this.index >= 1 && !((this.index + 1) >= this.steps.length)) {
             this.backButton.classList.remove('u-display--none');
@@ -95,13 +118,14 @@ class Guide {
         }
     }
 
+    /**
+     * Redirects to the results page with the chosen outcomes in the URL.
+     */
     private getResults() {
         const url = new URL(window.location.href);
         url.searchParams.set('outcome', JSON.stringify(this.choices));
         window.location.href = url.toString();
     }
-
-
 }
 
 export default Guide;

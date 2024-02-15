@@ -18,6 +18,10 @@ class SetupOutcomes {
         }
     }
     
+    /**
+     * Gets an array of HTMLSelectElement based on outcome fields.
+     * @returns {HTMLSelectElement[]} - Array of select elements.
+     */
     public getSelects(): HTMLSelectElement[] {
         const outcomeFields = acf.getFields({
             key: 'field_65b8ee0ac6cd8'
@@ -31,17 +35,17 @@ class SetupOutcomes {
         return selects ? selects : [];
     }
 
-    private setupAlreadyCreatedSelects(): void {
+    /**
+     * Sets up event listener for dynamic guides custom events.
+     * Populates selects with options based on global state.
+     */
+    private setupAlreadyCreatedSelects() {
         this.group.addEventListener('dynamicGuidesCustomEvent', (e: Event) => {
             const dynamicGuidesCustomEvent = e as CustomEventWithDetail;
 
             this.selects.forEach((select, index) => {
                 this.createOptions(select, dynamicGuidesCustomEvent.detail);
-                if (
-                    this.hiddenFieldValue &&
-                    typeof this.hiddenField === 'object' &&
-                    this.hiddenFieldValue[index]
-                ) {
+                if (Array.isArray(this.hiddenFieldValue) && this.hiddenFieldValue[index]) {
                     for (const key in this.hiddenFieldValue[index]) {
                         const preSelect = select.querySelector(`optgroup[label="${key}"] option[value="${this.hiddenFieldValue[index][key]}"]`) as HTMLOptionElement;
 
@@ -54,7 +58,11 @@ class SetupOutcomes {
         });
     }
     
-    
+    /**
+     * Creates options for the select element based on the event detail.
+     * @param {HTMLSelectElement} select - The select element.
+     * @param {EventDetailObject} detail - The event detail object.
+     */
     public createOptions(select: HTMLSelectElement, detail: EventDetailObject) {
         const { key, type, choiceKey } = detail;
 
@@ -69,7 +77,14 @@ class SetupOutcomes {
             }
         }
     }
-
+    
+    /**
+     * Adds option to the optgroup or creates new optgroup.
+     * @param {string} key - The key for the global state.
+     * @param {string} choiceKey - The choice key for the option.
+     * @param {Element | undefined} option - The existing option element.
+     * @param {Element | undefined} optgroup - The existing optgroup element.
+     */
     private addOption(key: string, choiceKey: string, option: Element | undefined, optgroup: Element | undefined) {
         if (option && optgroup) {
             option.setAttribute('value', (globalState as GlobalState)[key][choiceKey]);
@@ -79,6 +94,12 @@ class SetupOutcomes {
         }
     }
 
+    /**
+     * Adds optgroup to the select element or updates existing optgroup.
+     * @param {HTMLElement} select - The select element.
+     * @param {string} key - The key for the global state.
+     * @param {Element} optgroup - The existing optgroup element.
+     */
     private addOptgroup(select: HTMLElement, key: string, optgroup: Element) {
         if (optgroup) {
             optgroup.setAttribute('label', (globalState as GlobalState)[key]['heading']);
