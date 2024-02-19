@@ -23,6 +23,9 @@ class Actions {
         this.addActions();
     }
 
+    /**
+     * Sets up the listener for the publish button click event.
+     */
     private setupPublishListener() {
         if (!this.publishButton) return;
         this.publishButton.addEventListener('click', () => {
@@ -30,6 +33,9 @@ class Actions {
         });
     }
 
+    /**
+     * Adds actions such as remove, append, and validation_complete.
+     */
     public addActions() {
         acf.addAction('remove', (el: JQuery<HTMLElement>) => {
             this.removeAction(el);
@@ -46,7 +52,9 @@ class Actions {
             });
         }
     }
-
+    /**
+     * Handles the validation action for the outcomes.
+     */
     private validationAction() {
         const selectObjects: SelectObjects = {};
         this.outcomesInstance.getSelects().forEach((select: HTMLSelectElement, index: number) => {
@@ -67,6 +75,10 @@ class Actions {
         this.outcomesInstance.hiddenField.val(JSON.stringify(selectObjects));
     }
 
+    /**
+     * Handles the action when a row is appended.
+     * @param {JQuery<HTMLElement>} el - The jQuery element representing the appended row.
+     */
     private appendAction(el: JQuery<HTMLElement>) {
         const row = el[0];
             
@@ -109,6 +121,10 @@ class Actions {
         }
     }
 
+    /**
+     * Handles the action when a row is removed.
+     * @param {JQuery<HTMLElement>} el - The jQuery element representing the removed row.
+     */
     private removeAction(el: JQuery<HTMLElement>) {
         const row = el[0];
         if (!row) return;
@@ -160,6 +176,11 @@ class Actions {
         }
     }
 
+    /**
+     * Handles the action when a step row is added.
+     * @param {JQuery<HTMLElement>} stepRow - The jQuery element representing the added step row.
+     * @param {JQuery<HTMLElement>} heading - The jQuery element representing the heading.
+     */
     private stepRowAdded(stepRow: JQuery<HTMLElement>, heading: JQuery<HTMLElement>) {
         const key = globalState.generateUniqueKey();
         stepRow.attr('dynamic-guide-options-instance', key);
@@ -176,6 +197,11 @@ class Actions {
         (globalState as GlobalState)[key]['instance'].setupListeners(heading, []);
     }
 
+    /**
+     * Handles the action when a choice row is added.
+     * @param {Element} choicesGroup - The HTML element representing the choices group.
+     * @param {JQuery<HTMLElement>} choice - The jQuery element representing the added choice row.
+     */
     private choiceRowAdded(choicesGroup: Element, choice: JQuery<HTMLElement>) {
         const instance = choicesGroup?.getAttribute('dynamic-guide-options-instance');
 
@@ -184,6 +210,10 @@ class Actions {
         }
     }
 
+    /**
+     * Sets up a new select element with options based on the global state.
+     * @param {HTMLSelectElement} outcomeSelect - The HTML select element for outcomes.
+     */
     private setupNewSelect(outcomeSelect: HTMLSelectElement) {
         for (const step in globalState) {
             for (const key in (globalState as GlobalState)[step]) {

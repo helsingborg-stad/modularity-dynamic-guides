@@ -12,6 +12,11 @@ class Options {
         this.choiceIndex = 0;
     }
 
+    /**
+     * Sets up listeners for the heading and choices fields.
+     * @param {AcfField} heading - The heading field.
+     * @param {AcfField[]} choices - An array of choices fields.
+     */
     public setupListeners(heading: AcfField, choices: Array<AcfField>) {
         const input = heading.$el.find('input');
         if (!input) return;
@@ -34,6 +39,10 @@ class Options {
         });
     }
 
+    /**
+     * Listens to changes in the choice field and updates the global state.
+     * @param {AcfField} choice - The choice field.
+     */
     private listenToChoice(choice: AcfField) {
         const input = choice.$el.find('input');
         if (!input) return;
@@ -55,11 +64,22 @@ class Options {
         this.choiceIndex ++;
     }
 
+    /**
+     * Saves a value globally in the global state.
+     * @param {string} key - The key under which to store the value in global state.
+     * @param {string|false} value - The value to be stored.
+     */
     private saveValueGlobally(key: string, value: string|false) {
         (globalState as GlobalState)[this.key][key] = value;
     }
 
-   private createCustomEvent(type: string, choiceKey: string|false = false) {
+    /**
+     * Creates a custom event with specified details.
+     * @param {string} type - The type of the custom event.
+     * @param {string|false} choiceKey - The choice key associated with the event.
+     * @returns {CustomEvent} - The created custom event.
+     */
+   private createCustomEvent(type: string, choiceKey: string|false = false): CustomEvent {
         let args = {
             'detail': {
                 'key': this.key,
