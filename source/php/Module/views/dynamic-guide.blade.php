@@ -11,7 +11,7 @@
             @button([
                 'style'             => 'basic',
                 'color'             => 'default',
-                'text'              => 'Previous step',
+                'text'              => $lang['previousStep'],
                 'icon'              => 'arrow_back',
                 'reversePositions'  => 'true',
                 'classList'         => ['u-display--none', 'u-margin__right--auto', 'u-margin__top--3'],

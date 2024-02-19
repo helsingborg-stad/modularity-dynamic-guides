@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Modularity Dynamic Guides\n"
-"POT-Creation-Date: 2024-02-15 14:33+0100\n"
-"PO-Revision-Date: 2024-02-15 14:47+0100\n"
+"POT-Creation-Date: 2024-02-19 09:50+0100\n"
+"PO-Revision-Date: 2024-02-19 09:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: Svenska\n"
 "Language: sv_SE\n"
@@ -153,6 +153,10 @@ msgstr "Dynamiska guider"
 #: source/php/Module/DynamicGuides.php:22
 msgid "Creates dynamic guides."
 msgstr "Skapa dynamiska guider."
+
+#: source/php/Module/DynamicGuides.php:56
+msgid "Previous step"
+msgstr "Föregående steg"
 
 #: vendor/lucatume/args/tests/unit/ArgsTest.php:53
 #: vendor/lucatume/args/tests/unit/ArgsTest.php:162

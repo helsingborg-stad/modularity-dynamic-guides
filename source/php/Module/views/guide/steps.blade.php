@@ -22,6 +22,5 @@
                 @endif
             @endforeach
         @endif
-    
     </div>
 @endforeach

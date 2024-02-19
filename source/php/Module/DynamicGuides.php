@@ -18,8 +18,8 @@ class DynamicGuides extends \Modularity\Module
     public function init()
     {
         $this->nameSingular = __("Dynamic guide", 'modularity-dynamic-guides');
-        $this->namePlural = __("Dynamic guides", 'modularity-dynamic-guides');
-        $this->description = __("Creates dynamic guides.", 'modularity-dynamic-guides');
+        $this->namePlural   = __("Dynamic guides", 'modularity-dynamic-guides');
+        $this->description  = __("Creates dynamic guides.", 'modularity-dynamic-guides');
 
         add_filter('Modularity/Block/Settings', function ($blockSettings, $slug) {
             if ($slug == $this->slug) {
@@ -35,17 +35,29 @@ class DynamicGuides extends \Modularity\Module
     */
     public function data(): array
     {
-        $data = [];
-        $fields = get_fields($this->ID);
-        $data['startPage'] = $this->getStartPageValues($fields);
-        $data['endPage'] = $this->getEndPageValues($fields);
-        $data['resultsPage'] = $this->getResultsPageValues($fields);
-        $data['steps'] = $this->getChoicesSteps($fields);
-        $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? 
+        $data                    = [];
+        $fields                  = get_fields($this->ID);
+        $data['startPage']       = $this->getStartPageValues($fields);
+        $data['endPage']         = $this->getEndPageValues($fields);
+        $data['resultsPage']     = $this->getResultsPageValues($fields);
+        $data['steps']           = $this->getChoicesSteps($fields);
+        $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ?
         $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
-        $data['outcome'] = $this->getOutcome($fields);
+        $data['outcome']         = $this->getOutcome($fields);
+        $data['lang']            = $this->getTranslatedViewStrings();
 
         return $data;
+    }
+
+    /**
+     * Return translated strings as an array
+     * @return array
+     */
+    private function getTranslatedViewStrings(): array
+    {
+        return [
+            'previousStep' => __('Previous step', 'modularity-dynamic-guides'),
+        ];
     }
 
     /**
@@ -53,11 +65,12 @@ class DynamicGuides extends \Modularity\Module
      * @param array $fields
      * @return array|false
      */
-    private function getOutcome(array $fields) 
+    private function getOutcome(array $fields)
     {
         if (!isset($_GET['outcome'])) { return false; }
-        $outcomes = $fields['dynamic_guide_outcomes'];
+        $outcomes     = $fields['dynamic_guide_outcomes'];
         $outcomeIndex = $this->getOutcomeIndex($fields);
+
         if ($outcomeIndex === false || empty($outcomes[$outcomeIndex])) {
             return false;
         }
@@ -80,7 +93,7 @@ class DynamicGuides extends \Modularity\Module
      * Get default outcome values
      * @return array
      */
-    private function defaultOutcomeValues(): array 
+    private function defaultOutcomeValues(): array
     {
         return [
             'outcome_posts'                 => false,
@@ -173,10 +186,10 @@ class DynamicGuides extends \Modularity\Module
      * @param array $fields
      * @return array
      */
-    private function getStartPageValues(array $fields): array 
+    private function getStartPageValues(array $fields): array
     {
-        $startPage = !empty($fields['dynamic_guide_start_page']) ? 
-        array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page']) : 
+        $startPage = !empty($fields['dynamic_guide_start_page']) ?
+        array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page']) :
         [];
 
         return $startPage;
