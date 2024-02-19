@@ -4,7 +4,7 @@
  * Plugin Name:       Modularity Dynamic Guides
  * Plugin URI:        https://github.com/NiclasNorin/modularity-dynamic-guides
  * Description:       A plugin to create dynamic guides
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author:            Niclas Norin
  * Author URI:        https://github.com/NiclasNorin
  * License:           MIT
