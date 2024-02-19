@@ -3,8 +3,6 @@
     --primary-contrasting: var(--color-secondary-contrasting, var(--color-white));
     --primary-color: var(--color-secondary, #ae0b05);
 
-    min-height: 100vh;
-
     .dynamic-guide__background-image {
         position: absolute;
         width: calc(100vw - var(--scrollbar, 15px));
@@ -22,6 +20,8 @@
     .dynamic-guide__guide {
        display: flex;
        justify-content: center;
+       align-items: center;
+       min-height: 100vh;
 
         .dynamic-guide__guide-container {
             display: flex;
