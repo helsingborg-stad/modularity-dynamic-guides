@@ -1,7 +1,7 @@
 <div class="dynamic-guide">
 @if(empty($outcome))
     @includeWhen($backgroundImage, 'partials.background-image')
-    <div class="dynamic-guide__guide u-padding__top--12">
+    <div class="dynamic-guide__guide">
         @paper([
         'classList' => ['u-padding--6', 'dynamic-guide__guide-container']
         ])
