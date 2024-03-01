@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modularity Dynamic Guides\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 17:12+0100\n"
-"PO-Revision-Date: 2024-02-19 17:12+0100\n"
+"POT-Creation-Date: 2024-03-01 16:56+0100\n"
+"PO-Revision-Date: 2024-03-01 17:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.2\n"
 "X-Domain: modularity-dynamic-guides\n"
+"X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
@@ -37,7 +38,7 @@ msgstr "Rubrik"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:78
 msgid "Preamble"
-msgstr "Ingress"
+msgstr "Ingress "
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:99
 msgid "Button label"
@@ -45,15 +46,15 @@ msgstr "Knapptext"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:121
 msgid "End page"
-msgstr "Slutsida"
+msgstr "Sistasida"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:162
 msgid "Result button label"
-msgstr "Resultatknappens text"
+msgstr "Resultat knapptext"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:166
 msgid "The button label to get the result of the guide."
-msgstr "Knappens text som tar dig till resultatsidan."
+msgstr "Texten på knappen som hämtar resultatet."
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:182
 msgid "Restart button label"
@@ -61,7 +62,7 @@ msgstr "Starta om knapptext"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:186
 msgid "Button label to restart the guide"
-msgstr "Knappens text som startar om guiden"
+msgstr "Texten på knappen som startar om guiden"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:204
 msgid "Results page"
@@ -69,11 +70,11 @@ msgstr "Resultatsida"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:225
 msgid "Restart guide button label"
-msgstr "Starta om knapptext"
+msgstr "Starta om guide knapptext"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:229
 msgid "The label for the button to restart the guide after getting the results"
-msgstr "Knappens text som startar om guiden på nytt"
+msgstr "Texten på knappen som startar om guiden efter hämtat resultat"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:247
 msgid "Steps"
@@ -87,7 +88,7 @@ msgstr "Skapa ett steg för varje sida i guiden"
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:308
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:357
 msgid "Add Row"
-msgstr "Ny rad"
+msgstr "Lägg till rad"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:291
 msgid "Step"
@@ -115,7 +116,7 @@ msgstr "Inlägg"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:394
 msgid "Posts to show for following outcome"
-msgstr "Inägg som visas för följande utkomst"
+msgstr "Inägg att visa för följande utkomst"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:424
 msgid "Title"
@@ -131,11 +132,11 @@ msgstr "Bild"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:495
 msgid "Call To Action Url"
-msgstr "Knappens (CTA) Url"
+msgstr "URL (CTA)"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:513
 msgid "Call To Action Label"
-msgstr "Knapp (CTA)"
+msgstr "Knapptext (CTA)"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:536
 msgid "dynamic_guide_outcomes_hidden"
@@ -151,8 +152,8 @@ msgstr "Dynamiska guider"
 
 #: source/php/Module/DynamicGuides.php:22
 msgid "Creates dynamic guides."
-msgstr "Skapa dynamiska guider."
+msgstr "Skapa dynamiska guider"
 
-#: source/php/Module/DynamicGuides.php:56
+#: source/php/Module/DynamicGuides.php:59
 msgid "Previous step"
 msgstr "Föregående steg"
