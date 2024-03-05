@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Modularity Dynamic Guides\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-04 14:55+0100\n"
-"PO-Revision-Date: 2024-03-04 14:04+0000\n"
+"PO-Revision-Date: 2024-03-04 14:02+0000\n"
 "Last-Translator: \n"
 "Language-Team: Svenska\n"
 "Language: sv_SE\n"
@@ -47,7 +47,7 @@ msgstr "Knapptext (CTA)"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:495
 msgid "Call To Action Url"
-msgstr "Knapp URL (CTA)"
+msgstr "URL (CTA)"
 
 #: source/php/AcfFields/php/modularity-dynamic-guides-settings.php:314
 msgid "Choice"

@@ -32,6 +32,8 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require __DIR__ . '/vendor/autoload.php';
 }
 
+load_plugin_textdomain('modularity-dynamic-guides', false, plugin_basename(dirname(__FILE__)) . '/languages');
+
 add_filter('/Modularity/externalViewPath', function ($arr) {
     $arr['mod-dynamic-guide'] = MODULARITYDYNAMICGUIDES_MODULE_VIEW_PATH;
     return $arr;
@@ -48,7 +50,6 @@ add_action('acf/init', function () {
     $acfExportManager->import();
 });
 
-load_plugin_textdomain(MODULARITYDYNAMICGUIDES_TEXT_DOMAIN, false, MODULARITYDYNAMICGUIDES_PATH . '/languages');
 
 // Start application
 new ModularityDynamicGuides\App();
