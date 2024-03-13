@@ -11,22 +11,16 @@ class DynamicGuides extends \Modularity\Module
     public $slug = 'dynamic-guide';
     public $supports = array();
     public $cacheTtl = 0;
-
+    
     /**
      * Initialize the module
      */
     public function init()
     {
-        $this->nameSingular = __("Dynamic guide", 'modularity-dynamic-guides');
-        $this->namePlural   = __("Dynamic guides", 'modularity-dynamic-guides');
-        $this->description  = __("Creates dynamic guides.", 'modularity-dynamic-guides');
-
-        add_filter('Modularity/Block/Settings', function ($blockSettings, $slug) {
-            if ($slug == $this->slug) {
-                $blockSettings['mode'] = 'edit';
-            }
-            return $blockSettings;
-        }, 10, 2);
+        $this->nameSingular         = __("Dynamic guide", 'modularity-dynamic-guides');
+        $this->namePlural           = __("Dynamic guides", 'modularity-dynamic-guides');
+        $this->description          = __("Creates dynamic guides.", 'modularity-dynamic-guides');
+        $this->isBlockCompatible    = false;
     }
     
     /**
