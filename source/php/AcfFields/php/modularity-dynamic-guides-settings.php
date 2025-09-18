@@ -384,6 +384,8 @@
                     'allow_custom' => 0,
                     'search_placeholder' => '',
                     'parent_repeater' => 'field_65b8b17f91cdf',
+                    'create_options' => 0,
+                    'save_options' => 0,
                 ),
                 1 => array(
                     'key' => 'field_65bcf9c7288ef',
@@ -536,16 +538,21 @@
             'label' => __('dynamic_guide_outcomes_hidden', 'modularity-dynamic-guides'),
             'name' => 'dynamic_guide_outcomes_hidden',
             'aria-label' => '',
-            'type' => 'acfe_hidden',
+            'type' => 'text',
             'instructions' => '',
-            'required' => 1,
+            'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
                 'width' => '',
-                'class' => '',
+                'class' => 'acf-hidden',
                 'id' => '',
             ),
             'default_value' => '',
+            'maxlength' => '',
+            'allow_in_bindings' => 0,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
         ),
     ),
     'location' => array(
@@ -557,6 +564,13 @@
             ),
         ),
         1 => array(
+            0 => array(
+                'param' => 'block',
+                'operator' => '==',
+                'value' => 'all',
+            ),
+        ),
+        2 => array(
             0 => array(
                 'param' => 'block',
                 'operator' => '==',

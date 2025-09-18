@@ -378,7 +378,9 @@
                     "placeholder": "",
                     "allow_custom": 0,
                     "search_placeholder": "",
-                    "parent_repeater": "field_65b8b17f91cdf"
+                    "parent_repeater": "field_65b8b17f91cdf",
+                    "create_options": 0,
+                    "save_options": 0
                 },
                 {
                     "key": "field_65bcf9c7288ef",
@@ -530,16 +532,21 @@
             "label": "dynamic_guide_outcomes_hidden",
             "name": "dynamic_guide_outcomes_hidden",
             "aria-label": "",
-            "type": "acfe_hidden",
+            "type": "text",
             "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
-                "class": "",
+                "class": "acf-hidden",
                 "id": ""
             },
-            "default_value": ""
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -548,6 +555,13 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "mod-dynamic-guide"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "all"
             }
         ],
         [
