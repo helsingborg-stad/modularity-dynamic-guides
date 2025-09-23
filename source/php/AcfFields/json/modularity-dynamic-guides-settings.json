@@ -561,13 +561,6 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "all"
-            }
-        ],
-        [
-            {
-                "param": "block",
-                "operator": "==",
                 "value": "acf\/dynamic-guide"
             }
         ]
@@ -589,4 +582,4 @@
     "acfe_meta": "",
     "acfe_note": ""
 }]
-
+
