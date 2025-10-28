@@ -8,7 +8,7 @@ class App
     
     public function __construct()
     {
-        add_action('plugins_loaded', array($this, 'registerModule'));
+        add_action('init', array($this, 'registerModule'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdmin'));
         add_action('wp_enqueue_scripts', array($this, 'enqueueFrontend'));
         add_action('acf/validate_save_post', array($this, 'validateOutcomes'));
