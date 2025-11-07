@@ -19,16 +19,29 @@
             "ModularityDynamicGuides\\": "source/php/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}": [
+                "type:wordpress-muplugin",
+                "type:wordpress-theme",
+                "type:wordpress-plugin",
+                "type:acf-plugin"
+            ]
+        }
+    },
     "require-dev": {
-        "10up/wp_mock": "^1.0",
-        "lucatume/function-mocker": "^1.3",
         "helsingborg-stad/phpcs": "^0.3.5"
     },
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": true
         }
     },
-    "version": "2.0.0"
+    "version": "2.0.0",
+    "require": {
+        "helsingborg-stad/municipio": "^6.0.0"
+    }
 }
