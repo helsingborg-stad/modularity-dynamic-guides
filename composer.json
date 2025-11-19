@@ -40,8 +40,9 @@
             "composer/installers": true
         }
     },
-    "version": "2.0.0",
     "require": {
         "helsingborg-stad/municipio": "^6.0.0"
     }
+    "version": "2.0.1"
 }
+
