@@ -4,9 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62442044babb3d1b82f32401ee75f32d",
-    "packages": [],
-    "packages-dev": [
+    "content-hash": "b0332a0b12d9462bb510604c157f7d9c",
+    "packages": [
         {
             "name": "10up/wp_mock",
             "version": "1.0.0",
@@ -2536,6 +2535,7 @@
             "time": "2022-06-08T03:23:46+00:00"
         }
     ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {},
@@ -2543,5 +2543,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
