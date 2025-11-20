@@ -1,3 +1,47 @@
 {
-    "version": "2.0.2"
+    "name": "helsingborg/modularity-dynamic-guides",
+    "description": "A plugin to create dynamic guides",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "scripts": {
+        "test": "./vendor/bin/phpunit --testdox",
+        "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --testdox",
+        "minimal": "./vendor/bin/phpunit",
+    },
+    "authors": [
+        {
+            "name": "Niclas Norin",
+            "email": "niclas.norin@helsingborg.se"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ModularityDynamicGuides\\": "source/php/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}": [
+                "type:wordpress-muplugin",
+                "type:wordpress-theme",
+                "type:wordpress-plugin",
+                "type:acf-plugin"
+            ]
+        }
+    },
+    "require-dev": {
+        "helsingborg-stad/phpcs": "^0.3.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": true
+        }
+    },
+    "version": "2.0.2",
+    "require": {
+        "helsingborg-stad/municipio": "^6.0.0"
+    }
 }
