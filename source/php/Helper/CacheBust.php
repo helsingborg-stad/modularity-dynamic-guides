@@ -11,16 +11,21 @@ class CacheBust
      */
     public function name($name)
     {
-        $jsonPath = MODULARITYDYNAMICGUIDES_PATH . apply_filters(
-            'ModularityDynamicGuides/Helper/CacheBust/RevManifestPath',
-            'dist/manifest.json'
-        );
+        $jsonPath =
+            MODULARITYDYNAMICGUIDES_PATH
+            . apply_filters('ModularityDynamicGuides/Helper/CacheBust/RevManifestPath', 'dist/manifest.json');
 
         $revManifest = [];
         if (file_exists($jsonPath)) {
             $revManifest = json_decode(file_get_contents($jsonPath), true);
         } elseif ($this->isDebug()) {
-            echo '<div style="color:red">Error: Assets not built. Go to ' . MODULARITYDYNAMICGUIDES_PATH . ' and run gulp. See ' . MODULARITYDYNAMICGUIDES_PATH . 'README.md for more info.</div>';
+            echo
+                '<div style="color:red">Error: Assets not built. Go to '
+                    . MODULARITYDYNAMICGUIDES_PATH
+                    . ' and run gulp. See '
+                    . MODULARITYDYNAMICGUIDES_PATH
+                    . 'README.md for more info.</div>'
+            ;
         }
 
         if (!isset($revManifest[$name])) {

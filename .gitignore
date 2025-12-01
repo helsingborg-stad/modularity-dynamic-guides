@@ -49,6 +49,9 @@ dist/.temp
 dist/css
 dist
 
+phpunit-log.xml
+phpunit-testdox.txt
+
 # -------------------------
 # BEGIN Whitelisted Files
 # -------------------------
