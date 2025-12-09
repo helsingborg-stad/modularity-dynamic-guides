@@ -1,4 +1,4 @@
-declare module "dynamic-guides-interface" {
+declare module 'dynamic-guides-interface' {
 	interface CustomEventWithDetail extends CustomEvent {
 		detail: EventDetailObject;
 	}

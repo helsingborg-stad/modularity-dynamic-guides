@@ -1,5 +1,5 @@
-import globalState from "./globalState";
-import type { GlobalState, AcfField } from "dynamic-guides-interface";
+import globalState from './globalState';
+import type { GlobalState, AcfField } from 'dynamic-guides-interface';
 
 class Options {
 	group: HTMLElement;
@@ -18,20 +18,20 @@ class Options {
 	 * @param {AcfField[]} choices - An array of choices fields.
 	 */
 	public setupListeners(heading: AcfField, choices: Array<AcfField>) {
-		const input = heading.$el.find("input");
+		const input = heading.$el.find('input');
 		if (!input) return;
 
 		let currentHeadingsValue = input.val();
-		this.saveValueGlobally("heading", currentHeadingsValue ?? false);
-		this.group.dispatchEvent(this.createCustomEvent("heading"));
+		this.saveValueGlobally('heading', currentHeadingsValue ?? false);
+		this.group.dispatchEvent(this.createCustomEvent('heading'));
 
 		input.focus(() => {
 			currentHeadingsValue = input.val();
 		});
 
 		input.change(() => {
-			this.saveValueGlobally("heading", input.val() ?? false);
-			this.group.dispatchEvent(this.createCustomEvent("heading"));
+			this.saveValueGlobally('heading', input.val() ?? false);
+			this.group.dispatchEvent(this.createCustomEvent('heading'));
 		});
 
 		choices.forEach((choice) => {
@@ -44,37 +44,21 @@ class Options {
 	 * @param {AcfField} choice - The choice field.
 	 */
 	private listenToChoice(choice: AcfField) {
-		const input = choice.$el.find("input");
+		const input = choice.$el.find('input');
 		if (!input) return;
 
 		let currentChoiceValue = input.val();
 		const choiceIndex = this.choiceIndex;
-		this.saveValueGlobally(
-			"choice-" + choiceIndex + "_" + this.key,
-			currentChoiceValue ?? false,
-		);
-		this.group.dispatchEvent(
-			this.createCustomEvent(
-				"choice",
-				"choice-" + choiceIndex + "_" + this.key,
-			),
-		);
+		this.saveValueGlobally('choice-' + choiceIndex + '_' + this.key, currentChoiceValue ?? false);
+		this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_' + this.key));
 
 		input.focus((e) => {
 			currentChoiceValue = input.val();
 		});
 
 		input.change((e) => {
-			this.saveValueGlobally(
-				"choice-" + choiceIndex + "_" + this.key,
-				input.val() ?? false,
-			);
-			this.group.dispatchEvent(
-				this.createCustomEvent(
-					"choice",
-					"choice-" + choiceIndex + "_" + this.key,
-				),
-			);
+			this.saveValueGlobally('choice-' + choiceIndex + '_' + this.key, input.val() ?? false);
+			this.group.dispatchEvent(this.createCustomEvent('choice', 'choice-' + choiceIndex + '_' + this.key));
 		});
 
 		this.choiceIndex++;
@@ -95,10 +79,7 @@ class Options {
 	 * @param {string|false} choiceKey - The choice key associated with the event.
 	 * @returns {CustomEvent} - The created custom event.
 	 */
-	private createCustomEvent(
-		type: string,
-		choiceKey: string | false = false,
-	): CustomEvent {
+	private createCustomEvent(type: string, choiceKey: string | false = false): CustomEvent {
 		const args = {
 			detail: {
 				key: this.key,
@@ -107,7 +88,7 @@ class Options {
 			},
 		};
 
-		return new CustomEvent("dynamicGuidesCustomEvent", args);
+		return new CustomEvent('dynamicGuidesCustomEvent', args);
 	}
 }
 

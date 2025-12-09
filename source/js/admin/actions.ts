@@ -1,8 +1,8 @@
-import globalState from "./globalState";
-import type SetupOutcomes from "./setupOutcomes";
-import type SetupOptions from "./setupOptions";
-import Options from "./options";
-import type { GlobalState } from "dynamic-guides-interface";
+import globalState from './globalState';
+import type SetupOutcomes from './setupOutcomes';
+import type SetupOptions from './setupOptions';
+import Options from './options';
+import type { GlobalState } from 'dynamic-guides-interface';
 
 type SelectObject = { [key: string]: string };
 type SelectObjects = { [key: string]: SelectObject };
@@ -13,15 +13,11 @@ class Actions {
 	optionsInstance: SetupOptions;
 	publishButton: HTMLElement | null;
 
-	constructor(
-		group: HTMLElement,
-		outcomesInstance: SetupOutcomes,
-		optionsInstance: SetupOptions,
-	) {
+	constructor(group: HTMLElement, outcomesInstance: SetupOutcomes, optionsInstance: SetupOptions) {
 		this.group = group;
 		this.outcomesInstance = outcomesInstance;
 		this.optionsInstance = optionsInstance;
-		this.publishButton = document.querySelector("#publishing-action");
+		this.publishButton = document.querySelector('#publishing-action');
 
 		this.setupPublishListener();
 		this.addActions();
@@ -32,7 +28,7 @@ class Actions {
 	 */
 	private setupPublishListener() {
 		if (!this.publishButton) return;
-		this.publishButton.addEventListener("click", () => {
+		this.publishButton.addEventListener('click', () => {
 			this.validationAction();
 		});
 	}
@@ -41,16 +37,16 @@ class Actions {
 	 * Adds actions such as remove, append, and validation_complete.
 	 */
 	public addActions() {
-		acf.addAction("remove", (el: JQuery<HTMLElement>) => {
+		acf.addAction('remove', (el: JQuery<HTMLElement>) => {
 			this.removeAction(el);
 		});
 
-		acf.addAction("append", (el: JQuery<HTMLElement>) => {
+		acf.addAction('append', (el: JQuery<HTMLElement>) => {
 			this.appendAction(el);
 		});
 
 		if (!this.publishButton) {
-			acf.add_filter("validation_complete", (json: Object, $form: Object) => {
+			acf.add_filter('validation_complete', (json: Object, $form: Object) => {
 				this.validationAction();
 				return json;
 			});
@@ -61,22 +57,20 @@ class Actions {
 	 */
 	private validationAction() {
 		const selectObjects: SelectObjects = {};
-		this.outcomesInstance
-			.getSelects()
-			.forEach((select: HTMLSelectElement, index: number) => {
-				const selected = select.selectedOptions;
-				const selectObject: SelectObject = {};
+		this.outcomesInstance.getSelects().forEach((select: HTMLSelectElement, index: number) => {
+			const selected = select.selectedOptions;
+			const selectObject: SelectObject = {};
 
-				for (const option of selected) {
-					const optgroup = option.parentElement;
-					const optiongroupLabel = (optgroup as HTMLOptGroupElement)?.label;
+			for (const option of selected) {
+				const optgroup = option.parentElement;
+				const optiongroupLabel = (optgroup as HTMLOptGroupElement)?.label;
 
-					if (optiongroupLabel) {
-						selectObject[optiongroupLabel] = option.value;
-					}
+				if (optiongroupLabel) {
+					selectObject[optiongroupLabel] = option.value;
 				}
-				selectObjects[index] = selectObject;
-			});
+			}
+			selectObjects[index] = selectObject;
+		});
 
 		this.outcomesInstance.hiddenField.val(JSON.stringify(selectObjects));
 	}
@@ -91,7 +85,7 @@ class Actions {
 		const stepRow = el?.find('[data-name="choices"]');
 		if (stepRow.length > 0) {
 			const heading = acf.getFields({
-				key: "field_65b7993d1aba6",
+				key: 'field_65b7993d1aba6',
 				parent: el,
 				limit: 1,
 			});
@@ -103,13 +97,13 @@ class Actions {
 		}
 
 		const choice = acf.getFields({
-			key: "field_65b78b92784cf",
+			key: 'field_65b78b92784cf',
 			parent: el,
 			limit: 1,
 		});
 
 		if (choice[0]) {
-			const choicesGroup = row?.closest("[dynamic-guide-options-instance]");
+			const choicesGroup = row?.closest('[dynamic-guide-options-instance]');
 			if (choicesGroup) {
 				this.choiceRowAdded(choicesGroup, choice[0]);
 			}
@@ -135,16 +129,12 @@ class Actions {
 		const row = el[0];
 		if (!row) return;
 
-		const stepRemoved = row.querySelector("[dynamic-guide-options-instance]");
-		const optionRemoved = row.closest("[dynamic-guide-options-instance]");
+		const stepRemoved = row.querySelector('[dynamic-guide-options-instance]');
+		const optionRemoved = row.closest('[dynamic-guide-options-instance]');
 		if (stepRemoved) {
-			const instance = stepRemoved.getAttribute(
-				"dynamic-guide-options-instance",
-			);
+			const instance = stepRemoved.getAttribute('dynamic-guide-options-instance');
 			this.outcomesInstance.selects.forEach((select) => {
-				const optgroup = select.querySelector(
-					`optgroup[dynamic-guide-optgroup="${instance}"]`,
-				);
+				const optgroup = select.querySelector(`optgroup[dynamic-guide-optgroup="${instance}"]`);
 				if (optgroup) {
 					optgroup.remove();
 
@@ -156,9 +146,7 @@ class Actions {
 		}
 
 		if (optionRemoved) {
-			const instance = optionRemoved.getAttribute(
-				"dynamic-guide-options-instance",
-			);
+			const instance = optionRemoved.getAttribute('dynamic-guide-options-instance');
 			const removedOption = row.querySelector('[data-name="choice"] input');
 			let choiceId: string | false | null = false;
 
@@ -170,8 +158,8 @@ class Actions {
 
 					if (option) {
 						if (!choiceId) {
-							choiceId = option.hasAttribute("dynamic-guide-option")
-								? option.getAttribute("dynamic-guide-option")
+							choiceId = option.hasAttribute('dynamic-guide-option')
+								? option.getAttribute('dynamic-guide-option')
 								: false;
 						}
 
@@ -179,11 +167,7 @@ class Actions {
 					}
 				});
 
-				if (
-					choiceId &&
-					(globalState as GlobalState)[instance] &&
-					(globalState as GlobalState)[instance][choiceId]
-				) {
+				if (choiceId && (globalState as GlobalState)[instance] && (globalState as GlobalState)[instance][choiceId]) {
 					delete (globalState as GlobalState)[instance][choiceId];
 				}
 			}
@@ -195,23 +179,20 @@ class Actions {
 	 * @param {JQuery<HTMLElement>} stepRow - The jQuery element representing the added step row.
 	 * @param {JQuery<HTMLElement>} heading - The jQuery element representing the heading.
 	 */
-	private stepRowAdded(
-		stepRow: JQuery<HTMLElement>,
-		heading: JQuery<HTMLElement>,
-	) {
+	private stepRowAdded(stepRow: JQuery<HTMLElement>, heading: JQuery<HTMLElement>) {
 		const key = globalState.generateUniqueKey();
-		stepRow.attr("dynamic-guide-options-instance", key);
+		stepRow.attr('dynamic-guide-options-instance', key);
 
 		if (!(globalState as GlobalState)[key]) {
 			(globalState as GlobalState)[key] = {};
 		}
 
 		const optionsInstance = new Options(key, this.group);
-		if (!(globalState as GlobalState)[key]["instance"]) {
-			(globalState as GlobalState)[key]["instance"] = optionsInstance;
+		if (!(globalState as GlobalState)[key]['instance']) {
+			(globalState as GlobalState)[key]['instance'] = optionsInstance;
 		}
 
-		(globalState as GlobalState)[key]["instance"].setupListeners(heading, []);
+		(globalState as GlobalState)[key]['instance'].setupListeners(heading, []);
 	}
 
 	/**
@@ -220,16 +201,10 @@ class Actions {
 	 * @param {JQuery<HTMLElement>} choice - The jQuery element representing the added choice row.
 	 */
 	private choiceRowAdded(choicesGroup: Element, choice: JQuery<HTMLElement>) {
-		const instance = choicesGroup?.getAttribute(
-			"dynamic-guide-options-instance",
-		);
+		const instance = choicesGroup?.getAttribute('dynamic-guide-options-instance');
 
-		if (
-			choice &&
-			instance &&
-			(globalState as GlobalState)[instance]["instance"]
-		) {
-			(globalState as GlobalState)[instance]["instance"].listenToChoice(choice);
+		if (choice && instance && (globalState as GlobalState)[instance]['instance']) {
+			(globalState as GlobalState)[instance]['instance'].listenToChoice(choice);
 		}
 	}
 
@@ -240,16 +215,16 @@ class Actions {
 	private setupNewSelect(outcomeSelect: HTMLSelectElement) {
 		for (const step in globalState) {
 			for (const key in (globalState as GlobalState)[step]) {
-				if (key === "heading") {
+				if (key === 'heading') {
 					this.outcomesInstance.createOptions(outcomeSelect, {
 						key: step,
-						type: "heading",
+						type: 'heading',
 						choiceKey: false,
 					});
-				} else if (key !== "instance") {
+				} else if (key !== 'instance') {
 					this.outcomesInstance.createOptions(outcomeSelect, {
 						key: step,
-						type: "choice",
+						type: 'choice',
 						choiceKey: key,
 					});
 				}

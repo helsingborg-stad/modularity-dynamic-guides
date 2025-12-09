@@ -1,6 +1,6 @@
-import Options from "./options";
-import globalState from "./globalState";
-import type { AcfField, GlobalState } from "dynamic-guides-interface";
+import Options from './options';
+import globalState from './globalState';
+import type { AcfField, GlobalState } from 'dynamic-guides-interface';
 
 class SetupOptions {
 	group: HTMLElement;
@@ -16,7 +16,7 @@ class SetupOptions {
 	 * Sets up options based on the defined steps and their associated fields.
 	 */
 	private setupOptions() {
-		const steps = acf.getField("field_65b78add784cd");
+		const steps = acf.getField('field_65b78add784cd');
 
 		if (!steps) return;
 
@@ -27,15 +27,12 @@ class SetupOptions {
 
 			if (choicesRepeater && choicesRepeater[0] && choicesRepeater[0].$el) {
 				const key = globalState.generateUniqueKey();
-				choicesRepeater[0].$el.attr("dynamic-guide-options-instance", key);
+				choicesRepeater[0].$el.attr('dynamic-guide-options-instance', key);
 				const choices = this.getChoicesFields(choicesRepeater[0]);
 
 				if (choices) {
 					this.setupAndSaveNewOptionsInstance(key);
-					(globalState as GlobalState)[key]["instance"].setupListeners(
-						heading,
-						choices,
-					);
+					(globalState as GlobalState)[key]['instance'].setupListeners(heading, choices);
 				}
 			}
 		});
@@ -51,8 +48,8 @@ class SetupOptions {
 		}
 
 		const optionsInstance = new Options(key, this.group);
-		if (!(globalState as GlobalState)[key]["instance"]) {
-			(globalState as GlobalState)[key]["instance"] = optionsInstance;
+		if (!(globalState as GlobalState)[key]['instance']) {
+			(globalState as GlobalState)[key]['instance'] = optionsInstance;
 		}
 	}
 
@@ -63,7 +60,7 @@ class SetupOptions {
 	 */
 	private getChoicesFields(choiceRepeater: AcfField): AcfField[] {
 		return acf.getFields({
-			key: "field_65b78b92784cf",
+			key: 'field_65b78b92784cf',
 			parent: choiceRepeater.$el,
 		});
 	}
@@ -75,7 +72,7 @@ class SetupOptions {
 	 */
 	private getChoicesRepeaters(heading: AcfField): AcfField[] {
 		return acf.getFields({
-			key: "field_65b78b84784ce",
+			key: 'field_65b78b84784ce',
 			sibling: heading.$el,
 			limit: 1,
 		});
@@ -88,7 +85,7 @@ class SetupOptions {
 	 */
 	private getHeadingsFields(steps: AcfField): AcfField[] {
 		return acf.getFields({
-			key: "field_65b7993d1aba6",
+			key: 'field_65b7993d1aba6',
 			parent: steps.$el,
 		});
 	}

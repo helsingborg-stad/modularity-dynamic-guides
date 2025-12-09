@@ -10,21 +10,11 @@ class Guide {
 	constructor(dynamicGuide: HTMLDivElement) {
 		this.index = 0;
 		this.choices = {};
-		this.restartButton = dynamicGuide.querySelector(
-			"[data-js-dynamic-guide-restart-button]",
-		) as HTMLButtonElement;
-		this.answersContainer = dynamicGuide.querySelector(
-			"[data-js-dynamic-guide-answers]",
-		) as HTMLElement;
-		this.steps = [
-			...dynamicGuide.querySelectorAll("[data-js-dynamic-guide-step]"),
-		] as HTMLDivElement[];
-		this.backButton = dynamicGuide.querySelector(
-			"[data-js-dynamic-guide-back-button]",
-		) as HTMLButtonElement;
-		this.resetButton = dynamicGuide.querySelector(
-			"[data-js-dynamic-guide-endpage-back-button]",
-		) as HTMLButtonElement;
+		this.restartButton = dynamicGuide.querySelector('[data-js-dynamic-guide-restart-button]') as HTMLButtonElement;
+		this.answersContainer = dynamicGuide.querySelector('[data-js-dynamic-guide-answers]') as HTMLElement;
+		this.steps = [...dynamicGuide.querySelectorAll('[data-js-dynamic-guide-step]')] as HTMLDivElement[];
+		this.backButton = dynamicGuide.querySelector('[data-js-dynamic-guide-back-button]') as HTMLButtonElement;
+		this.resetButton = dynamicGuide.querySelector('[data-js-dynamic-guide-endpage-back-button]') as HTMLButtonElement;
 		this.setListeners();
 	}
 
@@ -34,11 +24,9 @@ class Guide {
 	private setListeners() {
 		this.steps &&
 			this.steps.forEach((step, index) => {
-				const buttons = [
-					...step.querySelectorAll("[data-js-dynamic-guide-button]"),
-				] as HTMLButtonElement[];
+				const buttons = [...step.querySelectorAll('[data-js-dynamic-guide-button]')] as HTMLButtonElement[];
 				buttons.forEach((button) => {
-					button.addEventListener("click", () => {
+					button.addEventListener('click', () => {
 						this.index++;
 						this.saveChoiceValue(step, button);
 						this.updateGuideStep(index);
@@ -47,21 +35,21 @@ class Guide {
 			});
 
 		this.backButton &&
-			this.backButton.addEventListener("click", () => {
+			this.backButton.addEventListener('click', () => {
 				const index = this.index;
 				this.index--;
 				this.updateGuideStep(index);
 			});
 
 		this.restartButton &&
-			this.restartButton.addEventListener("click", () => {
+			this.restartButton.addEventListener('click', () => {
 				const index = this.steps.length - 1;
 				this.index = 0;
 				this.updateGuideStep(index);
 			});
 
 		this.resetButton &&
-			this.resetButton.addEventListener("click", () => {
+			this.resetButton.addEventListener('click', () => {
 				this.resetGuide();
 			});
 	}
@@ -71,7 +59,7 @@ class Guide {
 	 */
 	private resetGuide() {
 		const url = new URL(window.location.href);
-		url.searchParams.delete("outcome");
+		url.searchParams.delete('outcome');
 		window.location.href = url.toString();
 	}
 
@@ -81,8 +69,8 @@ class Guide {
 	 * @param {HTMLButtonElement} button - The HTML button representing the chosen option.
 	 */
 	private saveChoiceValue(step: HTMLDivElement, button: HTMLButtonElement) {
-		const stepAttribute = step.getAttribute("data-js-dynamic-guide-step");
-		const buttonAttribute = button.getAttribute("data-js-dynamic-guide-button");
+		const stepAttribute = step.getAttribute('data-js-dynamic-guide-step');
+		const buttonAttribute = button.getAttribute('data-js-dynamic-guide-button');
 
 		if (stepAttribute && buttonAttribute) {
 			this.choices[stepAttribute] = buttonAttribute;
@@ -97,7 +85,7 @@ class Guide {
 	 * Creates a list of answers and questions in the answers container.
 	 */
 	private createAnswersList() {
-		let li = "";
+		let li = '';
 		for (const [answer, question] of Object.entries(this.choices)) {
 			li += this.createListItem(answer, question);
 		}
@@ -121,14 +109,14 @@ class Guide {
 	 */
 	private updateGuideStep(index: number) {
 		if (this.index >= 1 && !(this.index + 1 >= this.steps.length)) {
-			this.backButton.classList.remove("u-display--none");
+			this.backButton.classList.remove('u-display--none');
 		} else {
-			this.backButton.classList.add("u-display--none");
+			this.backButton.classList.add('u-display--none');
 		}
 
 		if (this.steps[this.index]) {
-			this.steps[index].classList.add("u-display--none");
-			this.steps[this.index].classList.remove("u-display--none");
+			this.steps[index].classList.add('u-display--none');
+			this.steps[this.index].classList.remove('u-display--none');
 		} else {
 			this.getResults();
 		}
@@ -139,7 +127,7 @@ class Guide {
 	 */
 	private getResults() {
 		const url = new URL(window.location.href);
-		url.searchParams.set("outcome", JSON.stringify(this.choices));
+		url.searchParams.set('outcome', JSON.stringify(this.choices));
 		window.location.href = url.toString();
 	}
 }
