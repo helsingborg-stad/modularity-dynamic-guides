@@ -43,7 +43,7 @@
             "carthage-software/mago": true
         }
     },
-    "version": "2.0.4",
+    "version": "2.0.7",
     "require": {
         "helsingborg-stad/wpservice": "^2.0",
         "helsingborg-stad/wputilservice": "^0.2.44"
