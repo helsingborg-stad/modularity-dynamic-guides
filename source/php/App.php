@@ -2,26 +2,27 @@
 
 namespace ModularityDynamicGuides;
 
+use WpUtilService\Features\Enqueue\EnqueueManager;
+
 class App
 {
-    private $cacheBust;
-    
-    public function __construct()
-    {
-        add_action('init', array($this, 'registerModule'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueAdmin'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueueFrontend'));
-        add_action('acf/validate_save_post', array($this, 'validateOutcomes'));
-
-        $this->cacheBust = new \ModularityDynamicGuides\Helper\CacheBust();
+    public function __construct(
+        private EnqueueManager $wpEnqueue,
+    ) {
+        add_action('init', [$this, 'registerModule']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueueAdmin']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueueFrontend']);
+        add_action('acf/validate_save_post', [$this, 'validateOutcomes']);
     }
 
     /**
      * Validate outcomes before saving ACF post.
      */
-    public function validateOutcomes() {
+    public function validateOutcomes()
+    {
         global $_POST;
-        if (empty($_POST['acf']['field_65b8b17f91cdf'])) return;
+        if (empty($_POST['acf']['field_65b8b17f91cdf']))
+            return;
 
         $outcomes = [];
         $hiddenOutcomes = [];
@@ -29,17 +30,15 @@ class App
         if (!empty($_POST['acf']['field_65b78add784cd']) && is_array($_POST['acf']['field_65b78add784cd'])) {
             $stepChoices = $this->getStepChoices($_POST['acf']['field_65b78add784cd']);
 
-            
             if (!empty($stepChoices)) {
                 $outcomes = $this->calculateOutcomes($stepChoices);
             }
         }
-        
+
         if (!empty($_POST['acf']['field_65ba49cbdb950'])) {
             $hiddenOutcomes = $this->getHiddenOutcomes($_POST['acf']['field_65ba49cbdb950']);
         }
 
-        
         $outcomesDiff = $this->compareArrays($outcomes, $hiddenOutcomes);
         $isError = false;
 
@@ -58,9 +57,10 @@ class App
      * @param string $hiddenOutcomesJson JSON string containing hidden outcomes.
      * @return array Hidden outcomes array.
      */
-    private function getHiddenOutcomes(string $hiddenOutcomesJson): array {
+    private function getHiddenOutcomes(string $hiddenOutcomesJson): array
+    {
         $hiddenOutcomesJson = stripslashes($hiddenOutcomesJson);
-        
+
         if (!empty($hiddenOutcomesJson)) {
             $hiddenOutcomesArr = json_decode($hiddenOutcomesJson, true);
 
@@ -78,28 +78,30 @@ class App
      * @param array $steps Selected steps.
      * @return array Step choices array.
      */
-    private function getStepChoices(array $steps): array {
+    private function getStepChoices(array $steps): array
+    {
         $stepChoices = [];
-            foreach ($steps as $step) {
-                if (
-                    !empty($step['field_65b78b84784ce']) && 
-                    is_array($step['field_65b78b84784ce'])
-                ) {
-                    $choices = [];
-                    foreach ($step['field_65b78b84784ce'] as $choice) {
-                        if ($choice['field_65b78b92784cf']) {
-                            $choices[] = $choice['field_65b78b92784cf'];
-                        }
-                    }
-
-                    if (!empty($choices) && !empty($step['field_65b7993d1aba6'])) {
-                        $stepChoices[] = [
-                            'step' => $step['field_65b7993d1aba6'],
-                            'choices' => $choices
-                        ];
-                    }
-                }
+        foreach ($steps as $step) {
+            if (!(!empty($step['field_65b78b84784ce']) && is_array($step['field_65b78b84784ce']))) {
+                continue;
             }
+
+            $choices = [];
+            foreach ($step['field_65b78b84784ce'] as $choice) {
+                if (!$choice['field_65b78b92784cf']) {
+                    continue;
+                }
+
+                $choices[] = $choice['field_65b78b92784cf'];
+            }
+
+            if (!empty($choices) && !empty($step['field_65b7993d1aba6'])) {
+                $stepChoices[] = [
+                    'step' => $step['field_65b7993d1aba6'],
+                    'choices' => $choices,
+                ];
+            }
+        }
 
         return $stepChoices;
     }
@@ -110,20 +112,23 @@ class App
      * @param array $outcomesDiff Array of missing outcomes differences.
      * @return string HTML string for missing outcomes.
      */
-    private function getOutcomesDiffString(array $outcomesDiff): string {
-        $diff = "";
+    private function getOutcomesDiffString(array $outcomesDiff): string
+    {
+        $diff = '';
         foreach ($outcomesDiff as $outcome) {
-            if (is_array($outcome)) {
-                $outcomeDiffString = implode(', ', array_map(
-                    function ($key, $value) {
-                        return "<b>$key:</b> $value";
-                    },
-                    array_keys($outcome),
-                    $outcome
-                ));
-
-                $diff .= '<li style="font-size: 0.9rem;">' . $outcomeDiffString . '</li>';
+            if (!is_array($outcome)) {
+                continue;
             }
+
+            $outcomeDiffString = implode(', ', array_map(
+                static function ($key, $value) {
+                    return "<b>$key:</b> $value";
+                },
+                array_keys($outcome),
+                $outcome,
+            ));
+
+            $diff .= '<li style="font-size: 0.9rem;">' . $outcomeDiffString . '</li>';
         }
 
         return $diff = '<b style="font-size: 1.1rem;">Missing outcomes:</b><ol>' . $diff . '</ol>';
@@ -136,12 +141,15 @@ class App
      * @param array $hiddenOutcomes Array of hidden outcomes.
      * @return array Missing outcomes.
      */
-    private function compareArrays(array $outcomes, array $hiddenOutcomes) {
+    private function compareArrays(array $outcomes, array $hiddenOutcomes)
+    {
         $missingOutcomes = [];
         foreach ($outcomes as $outcome) {
-            if (!in_array($outcome, $hiddenOutcomes)) {
-                $missingOutcomes[] = $outcome;
+            if (in_array($outcome, $hiddenOutcomes)) {
+                continue;
             }
+
+            $missingOutcomes[] = $outcome;
         }
 
         return $missingOutcomes;
@@ -154,47 +162,34 @@ class App
      * @param array $currentOutcome Current outcome being calculated.
      * @return array All possible outcomes.
      */
-    private function calculateOutcomes(array $steps, array $currentOutcome = []): array {
+    private function calculateOutcomes(array $steps, array $currentOutcome = []): array
+    {
         $allOutcomes = [];
 
         if (empty($steps)) {
             return [$currentOutcome];
         }
-    
+
         $currentStep = array_shift($steps);
-    
+
         foreach ($currentStep['choices'] as $choice) {
-            $outcomes = $this->calculateOutcomes($steps, array_merge($currentOutcome, [$currentStep['step'] => $choice]));
-    
+            $outcomes = $this->calculateOutcomes($steps, array_merge($currentOutcome, [
+                $currentStep['step'] => $choice,
+            ]));
+
             $allOutcomes = array_merge($allOutcomes, $outcomes);
         }
-    
+
         return $allOutcomes;
     }
 
     /**
      * Enqueue admin css and js
      * @return void
-    */
-    public function enqueueAdmin() 
+     */
+    public function enqueueAdmin()
     {
-        wp_register_script(
-            'modularity-dynamic-guides-admin-js',
-            MODULARITYDYNAMICGUIDES_URL . '/dist/' .
-            $this->cacheBust->name('js/modularity-dynamic-guides-admin.js'),
-            ['acf-input']
-        );
-
-        wp_enqueue_script('modularity-dynamic-guides-admin-js');
-
-        wp_register_style(
-            'modularity-dynamic-guides-admin-css',
-            MODULARITYDYNAMICGUIDES_URL . '/dist/' .
-            $this->cacheBust->name('css/modularity-dynamic-guides-admin.css')
-        );
-
-        wp_enqueue_style('modularity-dynamic-guides-admin-css');
-
+        $this->wpEnqueue->add('js/modularity-dynamic-guides-admin.js')->add('css/modularity-dynamic-guides-admin.css');
     }
 
     /**
@@ -203,21 +198,7 @@ class App
      */
     public function enqueueFrontend()
     {
-        wp_register_style(
-            'modularity-dynamic-guides-css',
-            MODULARITYDYNAMICGUIDES_URL . '/dist/' .
-            $this->cacheBust->name('css/modularity-dynamic-guides.css')
-        );
-
-        wp_enqueue_style('modularity-dynamic-guides-css');
-
-        wp_register_script(
-            'modularity-dynamic-guides-js',
-            MODULARITYDYNAMICGUIDES_URL . '/dist/' .
-            $this->cacheBust->name('js/modularity-dynamic-guides.js')
-        );
-
-        wp_enqueue_script('modularity-dynamic-guides-js');
+        $this->wpEnqueue->add('css/modularity-dynamic-guides.css')->add('js/modularity-dynamic-guides.js');
     }
 
     /**
@@ -227,10 +208,7 @@ class App
     public function registerModule()
     {
         if (function_exists('modularity_register_module')) {
-            modularity_register_module(
-                MODULARITYDYNAMICGUIDES_PATH . 'source/php/Module/',
-                'DynamicGuides'
-            );
+            modularity_register_module(MODULARITYDYNAMICGUIDES_PATH . 'source/php/Module/', 'DynamicGuides');
         }
     }
 }

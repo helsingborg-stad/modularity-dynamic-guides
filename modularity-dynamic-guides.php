@@ -13,9 +13,12 @@
  * Domain Path:       /languages
  */
 
- // Protect agains direct file access
-if (! defined('WPINC')) {
-    die;
+use WpService\Implementations\NativeWpService;
+use WpUtilService\WpUtilService;
+
+// Protect agains direct file access
+if (!defined('WPINC')) {
+    die();
 }
 
 define('MODULARITYDYNAMICGUIDES_PATH', plugin_dir_path(__FILE__));
@@ -34,10 +37,15 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 load_plugin_textdomain('modularity-dynamic-guides', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
-add_filter('/Modularity/externalViewPath', function ($arr) {
-    $arr['mod-dynamic-guide'] = MODULARITYDYNAMICGUIDES_MODULE_VIEW_PATH;
-    return $arr;
-}, 10, 3);
+add_filter(
+    '/Modularity/externalViewPath',
+    function ($arr) {
+        $arr['mod-dynamic-guide'] = MODULARITYDYNAMICGUIDES_MODULE_VIEW_PATH;
+        return $arr;
+    },
+    10,
+    3,
+);
 
 // Acf auto import and export
 add_action('acf/init', function () {
@@ -45,11 +53,13 @@ add_action('acf/init', function () {
     $acfExportManager->setTextdomain('modularity-dynamic-guides');
     $acfExportManager->setExportFolder(MODULARITYDYNAMICGUIDES_PATH . 'source/php/AcfFields/');
     $acfExportManager->autoExport(array(
-        'modularity-dynamic-guides-settings' => 'group_65b3a530b28a9' //Update with acf id here, settings view
+        'modularity-dynamic-guides-settings' => 'group_65b3a530b28a9', //Update with acf id here, settings view
     ));
     $acfExportManager->import();
 });
 
+$wpService = new NativeWpService();
+$wpUtilService = new WpUtilService($wpService);
 
 // Start application
-new ModularityDynamicGuides\App();
+new ModularityDynamicGuides\App($wpUtilService->enqueue(__DIR__));

@@ -9,36 +9,35 @@ namespace ModularityDynamicGuides\Module;
 class DynamicGuides extends \Modularity\Module
 {
     public $slug = 'dynamic-guide';
-    public $supports = array();
+    public $supports = [];
     public $cacheTtl = 0;
-    
+
     /**
      * Initialize the module
      */
     public function init()
     {
-        $this->nameSingular         = __("Dynamic guide", 'modularity-dynamic-guides');
-        $this->namePlural           = __("Dynamic guides", 'modularity-dynamic-guides');
-        $this->description          = __("Creates dynamic guides.", 'modularity-dynamic-guides');
-        $this->isBlockCompatible    = false;
+        $this->nameSingular = __('Dynamic guide', 'modularity-dynamic-guides');
+        $this->namePlural = __('Dynamic guides', 'modularity-dynamic-guides');
+        $this->description = __('Creates dynamic guides.', 'modularity-dynamic-guides');
+        $this->isBlockCompatible = false;
     }
-    
+
     /**
      * View data
      * @return array
-    */
+     */
     public function data(): array
     {
-        $data                    = [];
-        $fields                  = get_fields($this->ID);
-        $data['startPage']       = $this->getStartPageValues($fields);
-        $data['endPage']         = $this->getEndPageValues($fields);
-        $data['resultsPage']     = $this->getResultsPageValues($fields);
-        $data['steps']           = $this->getChoicesSteps($fields);
-        $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ?
-        $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
-        $data['outcome']         = $this->getOutcome($fields);
-        $data['lang']            = $this->getTranslatedViewStrings();
+        $data = [];
+        $fields = get_fields($this->ID);
+        $data['startPage'] = $this->getStartPageValues($fields);
+        $data['endPage'] = $this->getEndPageValues($fields);
+        $data['resultsPage'] = $this->getResultsPageValues($fields);
+        $data['steps'] = $this->getChoicesSteps($fields);
+        $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
+        $data['outcome'] = $this->getOutcome($fields);
+        $data['lang'] = $this->getTranslatedViewStrings();
 
         return $data;
     }
@@ -61,8 +60,10 @@ class DynamicGuides extends \Modularity\Module
      */
     private function getOutcome(array $fields)
     {
-        if (!isset($_GET['outcome'])) { return false; }
-        $outcomes     = $fields['dynamic_guide_outcomes'];
+        if (!isset($_GET['outcome'])) {
+            return false;
+        }
+        $outcomes = $fields['dynamic_guide_outcomes'];
         $outcomeIndex = $this->getOutcomeIndex($fields);
 
         if ($outcomeIndex === false || empty($outcomes[$outcomeIndex])) {
@@ -78,10 +79,9 @@ class DynamicGuides extends \Modularity\Module
         if ($outcome['outcome_image']) {
             $outcome['outcome_image'] = $this->getImageFromId($outcome['outcome_image']);
         }
-        
+
         return \Municipio\Helper\FormatObject::camelCase($outcome);
     }
-
 
     /**
      * Get default outcome values
@@ -90,12 +90,12 @@ class DynamicGuides extends \Modularity\Module
     private function defaultOutcomeValues(): array
     {
         return [
-            'outcome_posts'                 => false,
-            'outcome_content'               => false,
-            'outcome_title'                 => false,
-            'outcome_image'                 => false,
-            'outcome_call_to_action_url'    => false,
-            'outcome_call_to_action_label'  => false
+            'outcome_posts' => false,
+            'outcome_content' => false,
+            'outcome_title' => false,
+            'outcome_image' => false,
+            'outcome_call_to_action_url' => false,
+            'outcome_call_to_action_label' => false,
         ];
     }
 
@@ -104,26 +104,25 @@ class DynamicGuides extends \Modularity\Module
      * @param array $fields
      * @return false|int
      */
-    private function getOutcomeIndex(array $fields) {
+    private function getOutcomeIndex(array $fields)
+    {
         $outcomes = $fields['dynamic_guide_outcomes_hidden'];
         $urlOutcome = stripslashes($_GET['outcome']);
         $urlOutcome = (array) json_decode($urlOutcome, false);
 
-        
-        
         if (!empty($urlOutcome) && !empty($outcomes) && is_string($outcomes)) {
             $outcomes = (array) json_decode($outcomes);
             $matchingOutcome = false;
             foreach ($outcomes as $index => $outcome) {
                 $outcome = (array) $outcome;
                 $arrayKeysAreTheSame = $this->checkSameArrayKeys($outcome, $urlOutcome);
-                
+
                 if ($arrayKeysAreTheSame) {
                     $matchingOutcome = $index;
                     break;
                 }
             }
-            
+
             return $matchingOutcome;
         }
 
@@ -140,28 +139,29 @@ class DynamicGuides extends \Modularity\Module
     {
         ksort($outcome);
         ksort($urlOutcome);
-        if (array_keys($urlOutcome) !==  array_keys($outcome)) {
+        if (array_keys($urlOutcome) !== array_keys($outcome)) {
             return false;
         }
-        
+
         $matchingValues = true;
         foreach ($urlOutcome as $key => $value) {
-            if ($value !== $outcome[$key]) {
-                $matchingValues = false;
-                break;
+            if ($value === $outcome[$key]) {
+                continue;
             }
+
+            $matchingValues = false;
+            break;
         }
 
         return $matchingValues;
     }
-
 
     /**
      * Get posts based on post IDs
      * @param array $postIds
      * @return array
      */
-    private function getPosts(array $postIds) 
+    private function getPosts(array $postIds)
     {
         $posts = [];
         foreach ($postIds as $postId) {
@@ -182,9 +182,7 @@ class DynamicGuides extends \Modularity\Module
      */
     private function getStartPageValues(array $fields): array
     {
-        $startPage = !empty($fields['dynamic_guide_start_page']) ?
-        array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page']) :
-        [];
+        $startPage = !empty($fields['dynamic_guide_start_page']) ? array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page']) : [];
 
         return $startPage;
     }
@@ -194,23 +192,21 @@ class DynamicGuides extends \Modularity\Module
      * @param array $fields
      * @return array
      */
-    private function getEndPageValues(array $fields) {
-        $endPage = !empty($fields['dynamic_guide_end_page']) ? 
-        array_merge($this->defaultEndPageValues(), $fields['dynamic_guide_end_page']) : 
-        [];
+    private function getEndPageValues(array $fields)
+    {
+        $endPage = !empty($fields['dynamic_guide_end_page']) ? array_merge($this->defaultEndPageValues(), $fields['dynamic_guide_end_page']) : [];
 
         return $endPage;
     }
-    
+
     /**
      * Get results page values
      * @param array $fields
      * @return array
      */
-    private function getResultsPageValues(array $fields) {
-        $resultsPage = !empty($fields['dynamic_guide_results_page']) ? 
-        array_merge($this->defaultResultsPageValues(), $fields['dynamic_guide_results_page']) : 
-        [];
+    private function getResultsPageValues(array $fields)
+    {
+        $resultsPage = !empty($fields['dynamic_guide_results_page']) ? array_merge($this->defaultResultsPageValues(), $fields['dynamic_guide_results_page']) : [];
 
         return $resultsPage;
     }
@@ -220,7 +216,7 @@ class DynamicGuides extends \Modularity\Module
      * @param array $fields
      * @return false|array
      */
-    private function getChoicesSteps(array $fields) 
+    private function getChoicesSteps(array $fields)
     {
         return !empty($fields['dynamic_guide_steps']) ? $fields['dynamic_guide_steps'] : false;
     }
@@ -237,7 +233,7 @@ class DynamicGuides extends \Modularity\Module
             'button_label' => '',
         ];
     }
-    
+
     /**
      * Get default start page values
      * @return array
@@ -250,7 +246,7 @@ class DynamicGuides extends \Modularity\Module
             'restart_button_label' => '',
         ];
     }
-    
+
     /**
      * Get default start page values
      * @return array
@@ -267,7 +263,7 @@ class DynamicGuides extends \Modularity\Module
      * @param $id
      * @return false|array
      */
-    private function getImageFromId($id) 
+    private function getImageFromId($id)
     {
         if ($id && class_exists('\Municipio\Helper\Image')) {
             return \Municipio\Helper\Image::getImageAttachmentData($id, [1920, 1080]);
@@ -276,14 +272,13 @@ class DynamicGuides extends \Modularity\Module
         return false;
     }
 
-
     /**
      * Get the template file for the module
      * @return string
      */
     public function template(): string
     {
-        return "dynamic-guide.blade.php";
+        return 'dynamic-guide.blade.php';
     }
 
     /**

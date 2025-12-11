@@ -48,6 +48,10 @@ dist/temp
 dist/.temp
 dist/css
 dist
+/assets/
+
+phpunit-log.xml
+phpunit-testdox.txt
 
 # -------------------------
 # BEGIN Whitelisted Files
@@ -57,3 +61,4 @@ dist
 !.gitignore
 !.editorconfig
 !.github
+!.vscode
