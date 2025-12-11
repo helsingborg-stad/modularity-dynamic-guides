@@ -46,8 +46,7 @@
     "version": "2.0.4",
     "require": {
         "helsingborg-stad/wpservice": "^2.0",
-        "helsingborg-stad/wputilservice": "^0.2.44",
-        "helsingborg-stad/municipio": "^6.0.0"
+        "helsingborg-stad/wputilservice": "^0.2.44"
     },
     "suggest": {
         "helsingborg-stad/municipio": "^6.0.0"
