@@ -37,7 +37,8 @@
         "typescript": "^5.9.2",
         "vite": "^7.1.2",
         "vite-config-factory": "^1.0.1",
-        "sass-embedded": "^1.93.3"
+        "sass-embedded": "^1.93.3",
+        "@types/jquery": "^3.5.29"
     },
     "jest": {
         "testEnvironment": "jsdom",
@@ -61,8 +62,5 @@
     },
     "browser": {
         "child_process": false
-    },
-    "dependencies": {
-        "@types/jquery": "^3.5.29"
     }
 }

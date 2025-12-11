@@ -48,6 +48,7 @@ dist/temp
 dist/.temp
 dist/css
 dist
+/assets/
 
 phpunit-log.xml
 phpunit-testdox.txt
