@@ -35,9 +35,7 @@ class DynamicGuides extends \Modularity\Module
         $data['endPage'] = $this->getEndPageValues($fields);
         $data['resultsPage'] = $this->getResultsPageValues($fields);
         $data['steps'] = $this->getChoicesSteps($fields);
-        $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image'])
-            ? $this->getImageFromId($fields['dynamic_guide_background_image'])
-            : false;
+        $data['backgroundImage'] = !empty($fields['dynamic_guide_background_image']) ? $this->getImageFromId($fields['dynamic_guide_background_image']) : false;
         $data['outcome'] = $this->getOutcome($fields);
         $data['lang'] = $this->getTranslatedViewStrings();
 
@@ -184,9 +182,7 @@ class DynamicGuides extends \Modularity\Module
      */
     private function getStartPageValues(array $fields): array
     {
-        $startPage = !empty($fields['dynamic_guide_start_page'])
-            ? array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page'])
-            : [];
+        $startPage = !empty($fields['dynamic_guide_start_page']) ? array_merge($this->defaultStartPageValues(), $fields['dynamic_guide_start_page']) : [];
 
         return $startPage;
     }
@@ -198,9 +194,7 @@ class DynamicGuides extends \Modularity\Module
      */
     private function getEndPageValues(array $fields)
     {
-        $endPage = !empty($fields['dynamic_guide_end_page'])
-            ? array_merge($this->defaultEndPageValues(), $fields['dynamic_guide_end_page'])
-            : [];
+        $endPage = !empty($fields['dynamic_guide_end_page']) ? array_merge($this->defaultEndPageValues(), $fields['dynamic_guide_end_page']) : [];
 
         return $endPage;
     }
@@ -212,9 +206,7 @@ class DynamicGuides extends \Modularity\Module
      */
     private function getResultsPageValues(array $fields)
     {
-        $resultsPage = !empty($fields['dynamic_guide_results_page'])
-            ? array_merge($this->defaultResultsPageValues(), $fields['dynamic_guide_results_page'])
-            : [];
+        $resultsPage = !empty($fields['dynamic_guide_results_page']) ? array_merge($this->defaultResultsPageValues(), $fields['dynamic_guide_results_page']) : [];
 
         return $resultsPage;
     }
