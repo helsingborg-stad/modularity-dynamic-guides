@@ -10,10 +10,10 @@ use PHPUnit\Framework\TestCase;
 final class AutoloadResolverTest extends TestCase
 {
     /**
-     * @var array<int, string>
+     * Clean up temporary test directories.
+     *
+     * @return void
      */
-    private array $temporaryDirectories = [];
-
     protected function tearDown(): void
     {
         foreach ($this->temporaryDirectories as $directory) {
@@ -23,6 +23,11 @@ final class AutoloadResolverTest extends TestCase
         $this->temporaryDirectories = [];
     }
 
+    /**
+     * Assert that both plugin and site root autoloaders are discovered.
+     *
+     * @return void
+     */
     public function testGetAutoloadPathsReturnsPluginAndRootAutoloadersWhenTheyExist(): void
     {
         $pluginDirectory = $this->createDirectory('plugin');
@@ -39,6 +44,11 @@ final class AutoloadResolverTest extends TestCase
         $this->assertSame([$pluginAutoloadPath, $rootAutoloadPath], $autoloadPaths);
     }
 
+    /**
+     * Assert that missing autoloaders are excluded from the result.
+     *
+     * @return void
+     */
     public function testGetAutoloadPathsSkipsMissingAutoloaders(): void
     {
         $pluginDirectory = $this->createDirectory('plugin');
@@ -51,6 +61,11 @@ final class AutoloadResolverTest extends TestCase
 
         $this->assertSame([$rootAutoloadPath], $autoloadPaths);
     }
+
+    /**
+     * @var array<int, string>
+     */
+    private array $temporaryDirectories = [];
 
     /**
      * Create a temporary directory for a test.
