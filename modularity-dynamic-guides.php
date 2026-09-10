@@ -29,11 +29,12 @@ define('MODULARITYDYNAMICGUIDES_VIEW_PATH', MODULARITYDYNAMICGUIDES_PATH . 'view
 define('MODULARITYDYNAMICGUIDES_MODULE_VIEW_PATH', MODULARITYDYNAMICGUIDES_PATH . 'source/php/Module/views');
 
 require_once MODULARITYDYNAMICGUIDES_PATH . 'Public.php';
+require_once MODULARITYDYNAMICGUIDES_PATH . 'source/php/Support/AutoloadResolver.php';
 
-// Register the autoloader
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require __DIR__ . '/vendor/autoload.php';
-}
+\ModularityDynamicGuides\Support\AutoloadResolver::requireAutoloaders(
+    __DIR__,
+    defined('ABSPATH') ? ABSPATH : null,
+);
 
 load_plugin_textdomain('modularity-dynamic-guides', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
