@@ -34,8 +34,9 @@ require_once MODULARITYDYNAMICGUIDES_PATH . 'Public.php';
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require __DIR__ . '/vendor/autoload.php';
 }
-
-load_plugin_textdomain('modularity-dynamic-guides', false, plugin_basename(dirname(__FILE__)) . '/languages');
+add_action('init', function () {
+    load_plugin_textdomain('modularity-dynamic-guides', false, plugin_basename(dirname(__FILE__)) . '/languages');
+});
 
 add_filter(
     '/Modularity/externalViewPath',
