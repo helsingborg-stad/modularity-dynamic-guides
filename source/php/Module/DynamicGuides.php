@@ -167,7 +167,7 @@ class DynamicGuides extends \Modularity\Module
         foreach ($postIds as $postId) {
             $post = get_post($postId);
             if (!empty($post)) {
-                $post = \Municipio\Helper\Post::preparePostObject($post);
+                $post = \Municipio\Helper\Post::convertWpPostToPostObject($post);
                 $posts[] = $post;
             }
         }
